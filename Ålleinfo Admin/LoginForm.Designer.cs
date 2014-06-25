@@ -30,11 +30,11 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LoginForm));
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.UsernameBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.exit = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.PasswordBox = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.login = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -49,14 +49,19 @@
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
+            this.pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.LoginForm_MouseDown);
             // 
-            // textBox1
+            // UsernameBox
             // 
-            this.textBox1.Font = new System.Drawing.Font("Calibri", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox1.Location = new System.Drawing.Point(13, 231);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(259, 37);
-            this.textBox1.TabIndex = 1;
+            this.UsernameBox.BackColor = System.Drawing.Color.White;
+            this.UsernameBox.Font = new System.Drawing.Font("Calibri", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.UsernameBox.Location = new System.Drawing.Point(13, 231);
+            this.UsernameBox.MaxLength = 100;
+            this.UsernameBox.Name = "UsernameBox";
+            this.UsernameBox.Size = new System.Drawing.Size(259, 37);
+            this.UsernameBox.TabIndex = 1;
+            this.UsernameBox.TextChanged += new System.EventHandler(this.Box_TextChanged);
+            this.UsernameBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Box_KeyDown);
             // 
             // label1
             // 
@@ -76,9 +81,10 @@
             this.exit.Cursor = System.Windows.Forms.Cursors.Hand;
             this.exit.Font = new System.Drawing.Font("Calibri", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.exit.ForeColor = System.Drawing.Color.White;
-            this.exit.Location = new System.Drawing.Point(250, 0);
+            this.exit.Location = new System.Drawing.Point(230, 0);
             this.exit.Name = "exit";
-            this.exit.Size = new System.Drawing.Size(34, 39);
+            this.exit.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
+            this.exit.Size = new System.Drawing.Size(54, 39);
             this.exit.TabIndex = 3;
             this.exit.Text = "X";
             this.exit.Click += new System.EventHandler(this.exit_Click);
@@ -98,14 +104,18 @@
             this.label2.TabIndex = 5;
             this.label2.Text = "Lösenord:";
             // 
-            // textBox2
+            // PasswordBox
             // 
-            this.textBox2.Font = new System.Drawing.Font("Calibri", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox2.Location = new System.Drawing.Point(13, 300);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(259, 37);
-            this.textBox2.TabIndex = 4;
-            this.textBox2.UseSystemPasswordChar = true;
+            this.PasswordBox.BackColor = System.Drawing.Color.White;
+            this.PasswordBox.Font = new System.Drawing.Font("Calibri", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.PasswordBox.Location = new System.Drawing.Point(13, 300);
+            this.PasswordBox.MaxLength = 100;
+            this.PasswordBox.Name = "PasswordBox";
+            this.PasswordBox.Size = new System.Drawing.Size(259, 37);
+            this.PasswordBox.TabIndex = 4;
+            this.PasswordBox.UseSystemPasswordChar = true;
+            this.PasswordBox.TextChanged += new System.EventHandler(this.Box_TextChanged);
+            this.PasswordBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Box_KeyDown);
             // 
             // label3
             // 
@@ -117,6 +127,7 @@
             this.label3.Size = new System.Drawing.Size(175, 33);
             this.label3.TabIndex = 6;
             this.label3.Text = "Ålleinfo Admin";
+            this.label3.MouseDown += new System.Windows.Forms.MouseEventHandler(this.LoginForm_MouseDown);
             // 
             // login
             // 
@@ -127,12 +138,13 @@
             this.login.Cursor = System.Windows.Forms.Cursors.Hand;
             this.login.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.login.ForeColor = System.Drawing.Color.White;
-            this.login.Location = new System.Drawing.Point(148, 360);
+            this.login.Location = new System.Drawing.Point(148, 349);
             this.login.Name = "login";
             this.login.Padding = new System.Windows.Forms.Padding(10);
             this.login.Size = new System.Drawing.Size(124, 53);
             this.login.TabIndex = 7;
             this.login.Text = "Logga in";
+            this.login.Click += new System.EventHandler(this.login_Click);
             this.login.MouseDown += new System.Windows.Forms.MouseEventHandler(this.login_MouseDown);
             this.login.MouseUp += new System.Windows.Forms.MouseEventHandler(this.login_MouseUp);
             // 
@@ -141,14 +153,14 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(85)))), ((int)(((byte)(102)))));
-            this.ClientSize = new System.Drawing.Size(284, 422);
+            this.ClientSize = new System.Drawing.Size(284, 411);
             this.Controls.Add(this.login);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.PasswordBox);
             this.Controls.Add(this.exit);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.UsernameBox);
             this.Controls.Add(this.pictureBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -156,8 +168,8 @@
             this.MinimizeBox = false;
             this.Name = "LoginForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Log in";
-            this.TopMost = true;
+            this.Text = "Ålleinfo - Logga in";
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.LoginForm_MouseDown);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -167,11 +179,11 @@
         #endregion
 
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox UsernameBox;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label exit;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox PasswordBox;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label login;
     }
