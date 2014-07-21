@@ -1,15 +1,9 @@
 ﻿using System;
-using System.Runtime.InteropServices;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Media;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Web;
-using System.IO;
 using System.Windows.Forms;
 
 namespace Ålleinfo_Admin
@@ -182,7 +176,7 @@ namespace Ålleinfo_Admin
                 {
                     utskottsbild.Image = data.logo;
                     socUrlBox.Text = data.socialURL;
-                    descBox.Text = HttpUtility.HtmlDecode(data.description);
+                    descBox.Text = simpleHTMLDecode(data.description);
                 }
             });
 
@@ -263,6 +257,8 @@ namespace Ålleinfo_Admin
         }
 
         // HTTPUTILITY fixar inte åäö så att de blir läsbara i textrutan :( Nedan: egen fix
+        #region HTML Encoder/Decoder
+
         private String simpleHTMLEncode(String str)
         {
             str.Replace("å", "&aring;");
@@ -272,7 +268,40 @@ namespace Ålleinfo_Admin
             str.Replace("ö", "&ouml;");
             str.Replace("Ö", "&Ouml;");
 
+            String split = str;
+            str = "";
+
+            String[] divider = { Environment.NewLine };
+
+            foreach (String s in split.Split(divider, StringSplitOptions.None))
+            {
+                str += s + "<br>";
+            }
+
+            str = str.Substring(0, str.Length - 4);
+
             return str;
         }
+
+        private String simpleHTMLDecode(String str)
+        {
+            str = HttpUtility.HtmlDecode(str);
+
+            String split = str;
+            str = "";
+
+            String[] divider = { "<br>" };
+
+            foreach (String s in split.Split(divider, StringSplitOptions.None))
+            {
+                str += s + Environment.NewLine;
+            }
+
+            str = str.Substring(0, str.Length - Environment.NewLine.Length);
+            
+            return str;
+        }
+
+        #endregion
     }
 }
