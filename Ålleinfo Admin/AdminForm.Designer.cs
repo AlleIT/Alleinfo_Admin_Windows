@@ -49,12 +49,14 @@
             this.label4 = new System.Windows.Forms.Label();
             this.utskottsbild = new System.Windows.Forms.PictureBox();
             this.openNewLogo = new System.Windows.Forms.OpenFileDialog();
+            this.loading = new System.Windows.Forms.PictureBox();
             this.AvailibleActions.SuspendLayout();
             this.action_Hem.SuspendLayout();
             this.action_Create.SuspendLayout();
             this.action_administrate.SuspendLayout();
             this.panel_home.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.utskottsbild)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.loading)).BeginInit();
             this.SuspendLayout();
             // 
             // exit
@@ -340,12 +342,23 @@
             this.openNewLogo.ShowReadOnly = true;
             this.openNewLogo.Title = "Välj en ny bild";
             // 
+            // loading
+            // 
+            this.loading.Image = ((System.Drawing.Image)(resources.GetObject("loading.Image")));
+            this.loading.Location = new System.Drawing.Point(243, 40);
+            this.loading.Name = "loading";
+            this.loading.Size = new System.Drawing.Size(557, 0);
+            this.loading.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.loading.TabIndex = 12;
+            this.loading.TabStop = false;
+            // 
             // AdminForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(85)))), ((int)(((byte)(102)))));
             this.ClientSize = new System.Drawing.Size(800, 550);
+            this.Controls.Add(this.loading);
             this.Controls.Add(this.panel_home);
             this.Controls.Add(this.AvailibleActions);
             this.Controls.Add(this.panel2);
@@ -368,6 +381,7 @@
             this.panel_home.ResumeLayout(false);
             this.panel_home.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.utskottsbild)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.loading)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -395,5 +409,6 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.PictureBox utskottsbild;
         private System.Windows.Forms.OpenFileDialog openNewLogo;
+        private System.Windows.Forms.PictureBox loading;
     }
 }

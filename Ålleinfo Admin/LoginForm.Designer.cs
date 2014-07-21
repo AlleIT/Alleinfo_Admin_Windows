@@ -37,7 +37,11 @@
             this.PasswordBox = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.login = new System.Windows.Forms.Label();
+            this.loginStuff = new System.Windows.Forms.Panel();
+            this.loadingCircle = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.loginStuff.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.loadingCircle)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureBox1
@@ -55,7 +59,7 @@
             // 
             this.UsernameBox.BackColor = System.Drawing.Color.White;
             this.UsernameBox.Font = new System.Drawing.Font("Calibri", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.UsernameBox.Location = new System.Drawing.Point(13, 231);
+            this.UsernameBox.Location = new System.Drawing.Point(3, 31);
             this.UsernameBox.MaxLength = 100;
             this.UsernameBox.Name = "UsernameBox";
             this.UsernameBox.Size = new System.Drawing.Size(259, 37);
@@ -68,7 +72,7 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Calibri", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(12, 202);
+            this.label1.Location = new System.Drawing.Point(2, 2);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(148, 26);
             this.label1.TabIndex = 2;
@@ -98,7 +102,7 @@
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Calibri", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(12, 271);
+            this.label2.Location = new System.Drawing.Point(2, 71);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(96, 26);
             this.label2.TabIndex = 5;
@@ -108,7 +112,7 @@
             // 
             this.PasswordBox.BackColor = System.Drawing.Color.White;
             this.PasswordBox.Font = new System.Drawing.Font("Calibri", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.PasswordBox.Location = new System.Drawing.Point(13, 300);
+            this.PasswordBox.Location = new System.Drawing.Point(3, 100);
             this.PasswordBox.MaxLength = 100;
             this.PasswordBox.Name = "PasswordBox";
             this.PasswordBox.Size = new System.Drawing.Size(259, 37);
@@ -148,6 +152,27 @@
             this.login.MouseDown += new System.Windows.Forms.MouseEventHandler(this.login_MouseDown);
             this.login.MouseUp += new System.Windows.Forms.MouseEventHandler(this.login_MouseUp);
             // 
+            // loginStuff
+            // 
+            this.loginStuff.Controls.Add(this.PasswordBox);
+            this.loginStuff.Controls.Add(this.UsernameBox);
+            this.loginStuff.Controls.Add(this.label2);
+            this.loginStuff.Controls.Add(this.label1);
+            this.loginStuff.Location = new System.Drawing.Point(9, 206);
+            this.loginStuff.Name = "loginStuff";
+            this.loginStuff.Size = new System.Drawing.Size(265, 140);
+            this.loginStuff.TabIndex = 8;
+            // 
+            // loadingCircle
+            // 
+            this.loadingCircle.Image = ((System.Drawing.Image)(resources.GetObject("loadingCircle.Image")));
+            this.loadingCircle.Location = new System.Drawing.Point(9, 206);
+            this.loadingCircle.Name = "loadingCircle";
+            this.loadingCircle.Size = new System.Drawing.Size(265, 0);
+            this.loadingCircle.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.loadingCircle.TabIndex = 6;
+            this.loadingCircle.TabStop = false;
+            // 
             // LoginForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -156,12 +181,10 @@
             this.ClientSize = new System.Drawing.Size(284, 411);
             this.Controls.Add(this.login);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.PasswordBox);
             this.Controls.Add(this.exit);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.UsernameBox);
             this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.loadingCircle);
+            this.Controls.Add(this.loginStuff);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
@@ -171,6 +194,9 @@
             this.Text = "Ålleinfo - Logga in";
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.LoginForm_MouseDown);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.loginStuff.ResumeLayout(false);
+            this.loginStuff.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.loadingCircle)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -186,5 +212,7 @@
         private System.Windows.Forms.TextBox PasswordBox;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label login;
+        private System.Windows.Forms.Panel loginStuff;
+        private System.Windows.Forms.PictureBox loadingCircle;
     }
 }

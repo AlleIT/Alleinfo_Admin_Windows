@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Media;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Ålleinfo_Admin
@@ -66,7 +67,10 @@ namespace Ålleinfo_Admin
 
         private void login_Click(object sender, EventArgs e)
         {
-            if(UsernameBox.Text.Length < 2 || PasswordBox.Text.Length < 2)
+            if (login.Text != "Logga in")
+                return;
+
+            if (UsernameBox.Text.Length < 2 || PasswordBox.Text.Length < 2)
             {
                 if (UsernameBox.Text.Length < 2)
                     UsernameBox.BackColor = Color.FromArgb(255, 200, 200);
@@ -78,28 +82,45 @@ namespace Ålleinfo_Admin
                 return;
             }
 
-            Webresponse WR = Webber.Login(UsernameBox.Text, PasswordBox.Text);
+            login.Text = "Vänta...";
 
-            if (!WR.Successful)
-            {
-                if (WR.Message.Contains("Inloggningen misslyckades."))
+            loginStuff.Height = 0;
+
+            loadingCircle.Height = 140;
+
+            new Task(() =>
                 {
-                    SystemSounds.Asterisk.Play();
-                    UsernameBox.BackColor = Color.FromArgb(255, 200, 200);
-                    PasswordBox.BackColor = Color.FromArgb(255, 200, 200);
-                }
-                else
-                {
-                    MessageBox.Show(WR.Message, "Inloggningen misslyckades", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
-                return;
-            }
+                    Webresponse WR = Webber.Login(UsernameBox.Text, PasswordBox.Text);
 
-            AdminForm af = new AdminForm();
-            this.Hide();
-            af.FormClosed += (s, a) => this.Close();
-            af.Show();
+                    this.Invoke((MethodInvoker)delegate
+                    {
 
+                        loadingCircle.Height = 0;
+
+                        if (!WR.Successful)
+                        {
+                            loginStuff.Height = 140;
+                            login.Text = "Logga in";
+
+                            if (WR.Message.Contains("Inloggningen misslyckades."))
+                            {
+                                SystemSounds.Asterisk.Play();
+                                UsernameBox.BackColor = Color.FromArgb(255, 200, 200);
+                                PasswordBox.BackColor = Color.FromArgb(255, 200, 200);
+                            }
+                            else
+                            {
+                                MessageBox.Show(WR.Message, "Inloggningen misslyckades", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            }
+                            return;
+                        }
+
+                        AdminForm af = new AdminForm();
+                        this.Hide();
+                        af.FormClosed += (s, a) => this.Close();
+                        af.Show();
+                    });
+                }).Start();
         }
         #endregion
 
@@ -111,7 +132,7 @@ namespace Ålleinfo_Admin
 
         private void Box_KeyDown(object sender, KeyEventArgs e)
         {
-            if(e.KeyCode == Keys.Enter)
+            if (e.KeyCode == Keys.Enter)
             {
                 e.Handled = true;
                 e.SuppressKeyPress = true;

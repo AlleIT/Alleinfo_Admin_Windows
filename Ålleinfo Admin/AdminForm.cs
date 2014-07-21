@@ -146,20 +146,19 @@ namespace Ålleinfo_Admin
 
             switch (c.Name)
             {
+                default:
                 case "action_Hem":
                     panel_home.Visible = true;
                     panel_home.Height = 510;
-                    new Task(loadHome).Start();
+                    loadHome();
                     break;
 
                 case "action_Create":
+                    loadNewNews();
                     break;
 
                 case "action_administrate":
-
-                    break;
-
-                default:
+                    loadAllNews();
                     break;
             }
         }
@@ -169,16 +168,74 @@ namespace Ålleinfo_Admin
 
         private void loadHome()
         {
-            HomeData data = Webber.GetHome();
-            this.Invoke((MethodInvoker)delegate
+            loading.Height = 510;
+
+            new Task(() =>
             {
-                if (data.logo != null)
+                HomeData data = Webber.GetHome();
+                this.Invoke((MethodInvoker)delegate
                 {
-                    utskottsbild.Image = data.logo;
-                    socUrlBox.Text = data.socialURL;
-                    descBox.Text = simpleHTMLDecode(data.description);
-                }
-            });
+                    if (data.logo != null)
+                    {
+                        utskottsbild.Image = data.logo;
+                        socUrlBox.Text = data.socialURL;
+                        descBox.Text = simpleHTMLDecode(data.description);
+                        loading.Height = 0;
+                    }
+                });
+
+            }).Start();
+
+        }
+
+        private void loadNewNews()
+        {
+            loading.Height = 510;
+
+            new Task(() =>
+            {
+
+                this.Invoke((MethodInvoker)delegate
+                {
+
+                    loading.Height = 0;
+                });
+
+            }).Start();
+
+        }
+
+        private void loadAllNews()
+        {
+            loading.Height = 510;
+
+            new Task(() =>
+            {
+
+                this.Invoke((MethodInvoker)delegate
+                {
+
+                    loading.Height = 0;
+                });
+
+            }).Start();
+
+        }
+
+        private void loadEditNews()
+        {
+            loading.Height = 510;
+
+            new Task(() =>
+            {
+
+                this.Invoke((MethodInvoker)delegate
+                {
+
+                    loading.Height = 0;
+                });
+
+            }).Start();
 
         }
 
@@ -194,7 +251,7 @@ namespace Ålleinfo_Admin
 
         private void utskottsbild_Click(object sender, EventArgs e)
         {
-            if(openNewLogo.ShowDialog() == DialogResult.OK)
+            if (openNewLogo.ShowDialog() == DialogResult.OK)
             {
                 utskottsbild.Image = Bitmap.FromFile(openNewLogo.FileName);
             }
@@ -222,7 +279,7 @@ namespace Ålleinfo_Admin
                 this.Invoke((MethodInvoker)delegate
                 {
 
-                    if(response.Successful)
+                    if (response.Successful)
                     {
                         execHome.Text = "Sparat!";
                         SystemSounds.Beep.Play();
@@ -233,7 +290,7 @@ namespace Ålleinfo_Admin
                             Invoke((MethodInvoker)delegate
                             {
                                 execHome.Text = "Verkställ";
-                                
+
                             });
                         }).Start();
                     }
@@ -298,7 +355,7 @@ namespace Ålleinfo_Admin
             }
 
             str = str.Substring(0, str.Length - Environment.NewLine.Length);
-            
+
             return str;
         }
 
