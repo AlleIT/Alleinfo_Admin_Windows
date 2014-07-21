@@ -212,3 +212,7 @@ $RECYCLE.BIN/
 *.msi
 *.msm
 *.msp
+Ålleinfo Admin Server (winadmin)/serversync.ftp
+Ålleinfo Admin Server (winadmin)/serversync.bat
+*.ftp
+*.bat
