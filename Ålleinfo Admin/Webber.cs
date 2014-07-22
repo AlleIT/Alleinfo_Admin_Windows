@@ -20,6 +20,7 @@ namespace Ålleinfo_Admin
         const String imageParam = "image";
         const String descriptionParam = "description";
         const String socURLParam = "socialURL";
+        const String colorParam = "color";
 
         const String action_testCredentials = "testCreds";
         const String action_getHome = "getHome";
@@ -111,9 +112,10 @@ namespace Ålleinfo_Admin
                     Stream stream = httpWebReponse.GetResponseStream();
 
                     String description = response.Message.LastIndexOf(",") == response.Message.IndexOf(",") + 1 ? "" : response.Message.Substring(response.Message.IndexOf(",") + 1, response.Message.LastIndexOf(",") - response.Message.IndexOf(",") - 1);
-                    String socURL = response.Message.LastIndexOf(",") + 1 >= response.Message.Length ? "" : response.Message.Substring(response.Message.LastIndexOf(",") + 1);
+                    String socURL = response.Message.LastIndexOf(",") + 1 >= response.Message.Length ? "" : response.Message.Substring(response.Message.LastIndexOf(",") + 1, response.Message.Length - response.Message.LastIndexOf(",") - 8);
+                    String hexColor = response.Message.Substring(response.Message.Length - 7);
 
-                    return new HomeData(Image.FromStream(stream), description, socURL);
+                    return new HomeData(Image.FromStream(stream), description, socURL, hexColor);
                 }
                 catch (Exception e)
                 {
@@ -127,7 +129,7 @@ namespace Ålleinfo_Admin
                         + e.StackTrace.ToString());
 
 
-                    return new HomeData(null, null, null);
+                    return new HomeData(null, null, null, null);
                 }
             }
             else
@@ -136,7 +138,7 @@ namespace Ålleinfo_Admin
                     + Environment.NewLine + Environment.NewLine
                     + "Felmeddelande:" + Environment.NewLine
                     + response.Message);
-                return new HomeData(null, null, null);
+                return new HomeData(null, null, null, null);
             }
 
         }
@@ -152,6 +154,7 @@ namespace Ålleinfo_Admin
             reqParams.Add(imageParam, imageToBase64(data.logo));
             reqParams.Add(descriptionParam, data.description);
             reqParams.Add(socURLParam, data.socialURL);
+            reqParams.Add(colorParam, data.hexaColor);
 
             using (WebClient WC = new WebClient())
             {

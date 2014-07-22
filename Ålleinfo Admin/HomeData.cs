@@ -8,14 +8,16 @@ namespace Ålleinfo_Admin
         public Image logo;
         public String description;
         public String socialURL;
+        public String hexaColor;
 
         public HomeData() { }
 
-        public HomeData(Image logo, String description, String socialURL)
+        public HomeData(Image logo, String description, String socialURL, String hexaColor)
         {
             this.logo = logo;
             this.description = description;
             this.socialURL = socialURL;
+            this.hexaColor = hexaColor;
         }
     }
 }

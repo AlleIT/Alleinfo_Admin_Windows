@@ -35,7 +35,7 @@ Class ClientAssist extends Database {
 
 			$row = $query->fetch(PDO::FETCH_ASSOC);
 
-                        echo "accepted" . $row['logoPath'] . "," . $row['description'] . "," . $row['socialLink'];
+                        echo "accepted" . $row['logoPath'] . "," . $row['description'] . "," . $row['socialLink'] . $row['color'];
 
                 } else {
                         echo "Felaktiga användaruppgifter.";
@@ -68,10 +68,12 @@ Class ClientAssist extends Database {
 
 		$description = htmlentities($_POST['description']);
 		$socialLink = htmlentities(strip_tags($_POST['socialURL']));
+		$color = htmlentities(strip_tags($_POST['color']));
 
-		$query = $this->_link->prepare("UPDATE `alleit`.`accounts` SET `description` = :description, `socialLink` = :sociallink WHERE `accounts`.`id` =".$row['id']);
+		$query = $this->_link->prepare("UPDATE `alleit`.`accounts` SET `description` = :description, `socialLink` = :sociallink, `color` = :color WHERE `accounts`.`id` =".$row['id']);
                 $query->bindParam(":description", $description, PDO::PARAM_STR);
                 $query->bindParam(":sociallink", $socialLink, PDO::PARAM_STR);
+                $query->bindParam(":color", $color, PDO::PARAM_STR);
                 $query->execute();
 
                 echo "accepted";

@@ -180,6 +180,7 @@ namespace Ålleinfo_Admin
                         utskottsbild.Image = data.logo;
                         socUrlBox.Text = data.socialURL;
                         descBox.Text = simpleHTMLDecode(data.description);
+                        colorBut.BackColor = ColorTranslator.FromHtml(data.hexaColor);
                         loading.Height = 0;
                     }
                     else
@@ -305,7 +306,7 @@ namespace Ålleinfo_Admin
 
             execHome.Text = "Vänta...";
 
-            HomeData data = new HomeData(utskottsbild.Image, simpleHTMLEncode(descBox.Text), socUrlBox.Text);
+            HomeData data = new HomeData(utskottsbild.Image, simpleHTMLEncode(descBox.Text), socUrlBox.Text, HexConverter(colorBut.BackColor));
 
 
             new Task(() =>
@@ -424,6 +425,19 @@ namespace Ålleinfo_Admin
         }
 
         #endregion
+
+        private void colorBut_Click(object sender, EventArgs e)
+        {
+            if(colorPicker.ShowDialog() == DialogResult.OK)
+            {
+                colorBut.BackColor = colorPicker.Color;
+            }
+        }
+
+        private static String HexConverter(Color c)
+        {
+            return "#" + c.R.ToString("X2") + c.G.ToString("X2") + c.B.ToString("X2");
+        }
 
     }
 }
