@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Media;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Web;
@@ -12,6 +13,15 @@ namespace Ålleinfo_Admin
     {
         public static Queue<String> errorMessages = new Queue<String>();
 
+        private actionPage currentPage;
+
+        private Boolean isErrorShowing
+        {
+            get
+            {
+                return ErrorReport.Height > 0;
+            }
+        }
 
         public AdminForm()
         {
@@ -131,39 +141,88 @@ namespace Ålleinfo_Admin
 
         private void ActionButton_Click(object sender, EventArgs e)
         {
+            if (isErrorShowing)
+            {
+
+                errorMessages.Clear();
+
+                switch (setButtonFocus((Control)sender))
+                {
+                    default:
+                    case "action_Hem":
+                        if (currentPage == actionPage.Home)
+                        {
+                            ErrorReport.Height = 0;
+                            action_error.Visible = false;
+                            panel_home.Height = 510;
+                            return;
+                        }
+                        else
+                            break;
+
+                    case "action_Create":
+                        if (currentPage == actionPage.Create)
+                        {
+                            ErrorReport.Height = 0;
+                            action_error.Visible = false;
+                            return;
+                        }
+                        else
+                            break;
+
+                    case "action_administrate":
+                        if (currentPage == actionPage.Administrate)
+                        {
+                            ErrorReport.Height = 0;
+                            action_error.Visible = false;
+                            return;
+                        }
+                        else
+                            break;
+
+                    case "action_error":
+                        return;
+                }
+            }
+            panel_home.Height = 0;
+            panel_create.Height = 0;
+            loading.Height = 0;
+
             switch (setButtonFocus((Control)sender))
             {
                 default:
                 case "action_Hem":
                     ErrorReport.Height = 0;
                     action_error.Visible = false;
+                    currentPage = actionPage.Home;
 
                     loadHome();
-                    panel_home.Visible = true;
                     panel_home.Height = 510;
                     break;
 
                 case "action_Create":
                     ErrorReport.Height = 0;
                     action_error.Visible = false;
+                    currentPage = actionPage.Create;
 
-                    loadNewNews();
+                    loadCreateNews();
+                    panel_create.Height = 510;
                     break;
 
                 case "action_administrate":
                     ErrorReport.Height = 0;
                     action_error.Visible = false;
+                    currentPage = actionPage.Administrate;
 
                     loadAllNews();
                     break;
 
                 case "action_error":
-                    CheckForErrMsgs();
                     break;
             }
         }
         #endregion
-        
+
         #region loadPages
 
         private void loadHome()
@@ -177,7 +236,7 @@ namespace Ålleinfo_Admin
                 {
                     if (data.logo != null)
                     {
-                        utskottsbild.Image = data.logo;
+                        logo.Image = data.logo;
                         socUrlBox.Text = data.socialURL;
                         descBox.Text = simpleHTMLDecode(data.description);
                         colorBut.BackColor = ColorTranslator.FromHtml(data.hexaColor);
@@ -193,21 +252,19 @@ namespace Ålleinfo_Admin
 
         }
 
-        private void loadNewNews()
+        private void loadCreateNews()
         {
-            loading.Height = 510;
+            loading.Height = 0;
 
-            new Task(() =>
-            {
+            headline.Text = "";
+            Type.Text = "";
+            shortDesc.Text = "";
+            buttonUrl.Text = "";
+            CreateDescription.Text = "";
 
-                this.Invoke((MethodInvoker)delegate
-                {
-
-                    loading.Height = 0;
-                });
-
-            }).Start();
-
+            headline.BackColor = Color.White;
+            Type.BackColor = Color.White;
+            CreateDescription.BackColor = Color.White;
         }
 
         private void loadAllNews()
@@ -267,9 +324,7 @@ namespace Ålleinfo_Admin
             }
 
             c.BackColor = Color.FromArgb(0, 85, 102);
-
-            panel_home.Visible = false;
-
+            
             return c.Name;
         }
 
@@ -278,25 +333,13 @@ namespace Ålleinfo_Admin
         #region Pages
 
         #region Page_Home
-        private void descBox_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Control && e.KeyCode == Keys.A)
-            {
-                descBox.SelectAll();
-            }
-        }
 
         private void utskottsbild_Click(object sender, EventArgs e)
         {
             if (openNewLogo.ShowDialog() == DialogResult.OK)
             {
-                utskottsbild.Image = Bitmap.FromFile(openNewLogo.FileName);
+                logo.Image = Bitmap.FromFile(openNewLogo.FileName);
             }
-        }
-
-        private void socUrlBox_MouseDown(object sender, MouseEventArgs e)
-        {
-            socUrlBox.SelectAll();
         }
 
         private void execHome_Click(object sender, EventArgs e)
@@ -306,7 +349,7 @@ namespace Ålleinfo_Admin
 
             execHome.Text = "Vänta...";
 
-            HomeData data = new HomeData(utskottsbild.Image, simpleHTMLEncode(descBox.Text), socUrlBox.Text, HexConverter(colorBut.BackColor));
+            HomeData data = new HomeData(logo.Image, simpleHTMLEncode(descBox.Text), socUrlBox.Text, HexConverter(colorBut.BackColor));
 
 
             new Task(() =>
@@ -346,6 +389,89 @@ namespace Ålleinfo_Admin
             }).Start();
         }
 
+        private void colorBut_Click(object sender, EventArgs e)
+        {
+            if (colorPicker.ShowDialog() == DialogResult.OK)
+            {
+                colorBut.BackColor = colorPicker.Color;
+            }
+        }
+
+        #endregion
+
+        #region Page_Create
+
+        private void saveExec_Click(object sender, EventArgs e)
+        {
+            if (saveExec.Text == "Vänta...")
+                return;
+
+            if (headline.Text.Length < 2
+                || Type.Text.Length < 2
+                || CreateDescription.Text.Length < 2)
+            {
+                if (headline.Text.Length < 2)
+                    headline.BackColor = Color.FromArgb(255, 200, 200);
+
+                if (Type.Text.Length < 2)
+                    Type.BackColor = Color.FromArgb(255, 200, 200);
+
+                if (CreateDescription.Text.Length < 2)
+                    CreateDescription.BackColor = Color.FromArgb(255, 200, 200);
+
+                SystemSounds.Beep.Play();
+                return;
+            }
+
+            saveExec.Text = "Vänta...";
+
+            CreateData data = new CreateData(simpleHTMLEncode(headline.Text), simpleHTMLEncode(shortDesc.Text), simpleHTMLEncode(Type.Text), buttonUrl.Text, simpleHTMLEncode(CreateDescription.Text));
+
+            new Task(() =>
+            {
+                Webresponse response = Webber.SetNews(data);
+
+                this.Invoke((MethodInvoker)delegate
+                {
+
+                    if (response.Successful)
+                    {
+                        saveExec.Text = "Sparat!";
+
+                        new Task(() =>
+                        {
+                            System.Threading.Thread.Sleep(4000);
+                            Invoke((MethodInvoker)delegate
+                            {
+                                saveExec.Text = "Spara";
+
+                            });
+                        }).Start();
+                    }
+                    else
+                    {
+                        AdminForm.errorMessages.Enqueue("Sparandet misslyckades! Försök igen."
+                            + Environment.NewLine + Environment.NewLine
+                            + "Felmeddelande:" + Environment.NewLine
+                            + response.Message.ToString());
+
+                        CheckForErrMsgs();
+
+                        saveExec.Text = "Spara";
+                    }
+                });
+
+            }).Start();
+
+        }
+
+        private void createTextBoxChange(object sender, EventArgs e)
+        {
+            headline.BackColor = Color.White;
+            Type.BackColor = Color.White;
+            CreateDescription.BackColor = Color.White;
+        }
+
         #endregion
 
         #endregion
@@ -359,11 +485,13 @@ namespace Ålleinfo_Admin
             else if (AdminForm.errorMessages.Count == 0)
             {
                 ErrorReport.Height = 0;
-                action_error.Height = 0;
+                action_error.Visible = false;
                 return;
             }
 
             setButtonFocus(action_error);
+
+            action_error.Visible = true;
 
             ErrorReport.Height = 510;
 
@@ -371,11 +499,16 @@ namespace Ålleinfo_Admin
 
             ReportText.Left = ErrorReport.Width / 2 - ReportText.Width / 2;
             ReportText.Top = ErrorReport.Height / 2 - ReportText.Height / 2;
-
-            action_error.Height = 510;
         }
 
         #endregion
+
+        #region utilities
+
+        private static String HexConverter(Color c)
+        {
+            return "#" + c.R.ToString("X2") + c.G.ToString("X2") + c.B.ToString("X2");
+        }
 
         #region HTML Encoder/Decoder
 
@@ -426,18 +559,24 @@ namespace Ålleinfo_Admin
 
         #endregion
 
-        private void colorBut_Click(object sender, EventArgs e)
+        #endregion
+
+        #region Generic texbox behaviours
+
+        // Linked to: Home, Create
+        private void descBox_KeyDown(object sender, KeyEventArgs e)
         {
-            if(colorPicker.ShowDialog() == DialogResult.OK)
+            if (e.Control && e.KeyCode == Keys.A)
             {
-                colorBut.BackColor = colorPicker.Color;
+                ((TextBox)sender).SelectAll();
             }
         }
-
-        private static String HexConverter(Color c)
+        private void UrlBox_MouseDown(object sender, MouseEventArgs e)
         {
-            return "#" + c.R.ToString("X2") + c.G.ToString("X2") + c.B.ToString("X2");
+            ((TextBox)sender).SelectAll();
         }
+
+        #endregion
 
     }
 }

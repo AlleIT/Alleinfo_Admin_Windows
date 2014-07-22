@@ -43,31 +43,44 @@
             this.action_error = new System.Windows.Forms.Panel();
             this.label7 = new System.Windows.Forms.Label();
             this.panel_home = new System.Windows.Forms.Panel();
+            this.colorBut = new System.Windows.Forms.Panel();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.label8 = new System.Windows.Forms.Label();
             this.socUrlBox = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.execHome = new System.Windows.Forms.Label();
             this.descBox = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.utskottsbild = new System.Windows.Forms.PictureBox();
+            this.logo = new System.Windows.Forms.PictureBox();
             this.openNewLogo = new System.Windows.Forms.OpenFileDialog();
             this.loading = new System.Windows.Forms.PictureBox();
             this.ErrorReport = new System.Windows.Forms.Panel();
             this.ReportText = new System.Windows.Forms.Label();
             this.colorPicker = new System.Windows.Forms.ColorDialog();
-            this.label8 = new System.Windows.Forms.Label();
-            this.colorBut = new System.Windows.Forms.Panel();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.panel3 = new System.Windows.Forms.Panel();
+            this.panel_create = new System.Windows.Forms.Panel();
+            this.label13 = new System.Windows.Forms.Label();
+            this.buttonUrl = new System.Windows.Forms.TextBox();
+            this.saveExec = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.CreateDescription = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.Type = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.shortDesc = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.headline = new System.Windows.Forms.TextBox();
             this.AvailibleActions.SuspendLayout();
             this.action_Hem.SuspendLayout();
             this.action_Create.SuspendLayout();
             this.action_administrate.SuspendLayout();
             this.action_error.SuspendLayout();
             this.panel_home.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.utskottsbild)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.logo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.loading)).BeginInit();
             this.ErrorReport.SuspendLayout();
+            this.panel_create.SuspendLayout();
             this.SuspendLayout();
             // 
             // exit
@@ -162,6 +175,7 @@
             this.action_Hem.Name = "action_Hem";
             this.action_Hem.Size = new System.Drawing.Size(240, 70);
             this.action_Hem.TabIndex = 0;
+            this.action_Hem.TabStop = true;
             this.action_Hem.Click += new System.EventHandler(this.ActionButton_Click);
             this.action_Hem.Enter += new System.EventHandler(this.ActionButton_Enter);
             this.action_Hem.Leave += new System.EventHandler(this.ActionButton_Leave);
@@ -194,6 +208,7 @@
             this.action_Create.Name = "action_Create";
             this.action_Create.Size = new System.Drawing.Size(240, 70);
             this.action_Create.TabIndex = 1;
+            this.action_Create.TabStop = true;
             this.action_Create.Click += new System.EventHandler(this.ActionButton_Click);
             this.action_Create.Enter += new System.EventHandler(this.ActionButton_Enter);
             this.action_Create.Leave += new System.EventHandler(this.ActionButton_Leave);
@@ -226,6 +241,7 @@
             this.action_administrate.Name = "action_administrate";
             this.action_administrate.Size = new System.Drawing.Size(240, 70);
             this.action_administrate.TabIndex = 2;
+            this.action_administrate.TabStop = true;
             this.action_administrate.Click += new System.EventHandler(this.ActionButton_Click);
             this.action_administrate.Enter += new System.EventHandler(this.ActionButton_Enter);
             this.action_administrate.Leave += new System.EventHandler(this.ActionButton_Leave);
@@ -258,6 +274,7 @@
             this.action_error.Name = "action_error";
             this.action_error.Size = new System.Drawing.Size(240, 70);
             this.action_error.TabIndex = 3;
+            this.action_error.TabStop = true;
             this.action_error.Visible = false;
             this.action_error.Click += new System.EventHandler(this.ActionButton_Click);
             this.action_error.Enter += new System.EventHandler(this.ActionButton_Enter);
@@ -289,11 +306,49 @@
             this.panel_home.Controls.Add(this.descBox);
             this.panel_home.Controls.Add(this.label5);
             this.panel_home.Controls.Add(this.label4);
-            this.panel_home.Controls.Add(this.utskottsbild);
+            this.panel_home.Controls.Add(this.logo);
             this.panel_home.Location = new System.Drawing.Point(242, 40);
             this.panel_home.Name = "panel_home";
-            this.panel_home.Size = new System.Drawing.Size(558, 510);
+            this.panel_home.Size = new System.Drawing.Size(558, 0);
             this.panel_home.TabIndex = 11;
+            // 
+            // colorBut
+            // 
+            this.colorBut.BackColor = System.Drawing.Color.Black;
+            this.colorBut.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.colorBut.Location = new System.Drawing.Point(242, 160);
+            this.colorBut.Name = "colorBut";
+            this.colorBut.Size = new System.Drawing.Size(294, 50);
+            this.colorBut.TabIndex = 12;
+            this.colorBut.TabStop = true;
+            this.colorBut.Click += new System.EventHandler(this.colorBut_Click);
+            // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.Color.White;
+            this.panel1.Location = new System.Drawing.Point(232, 150);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(314, 35);
+            this.panel1.TabIndex = 13;
+            // 
+            // panel3
+            // 
+            this.panel3.BackColor = System.Drawing.Color.Black;
+            this.panel3.Location = new System.Drawing.Point(232, 185);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(314, 35);
+            this.panel3.TabIndex = 14;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.ForeColor = System.Drawing.Color.White;
+            this.label8.Location = new System.Drawing.Point(311, 224);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(153, 19);
+            this.label8.TabIndex = 11;
+            this.label8.Text = "Välj representativ färg";
             // 
             // socUrlBox
             // 
@@ -301,8 +356,8 @@
             this.socUrlBox.Location = new System.Drawing.Point(232, 29);
             this.socUrlBox.Name = "socUrlBox";
             this.socUrlBox.Size = new System.Drawing.Size(314, 31);
-            this.socUrlBox.TabIndex = 10;
-            this.socUrlBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.socUrlBox_MouseDown);
+            this.socUrlBox.TabIndex = 0;
+            this.socUrlBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.UrlBox_MouseDown);
             // 
             // label6
             // 
@@ -324,7 +379,7 @@
             this.execHome.Cursor = System.Windows.Forms.Cursors.Hand;
             this.execHome.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.execHome.ForeColor = System.Drawing.Color.White;
-            this.execHome.Location = new System.Drawing.Point(423, 445);
+            this.execHome.Location = new System.Drawing.Point(423, -65);
             this.execHome.Name = "execHome";
             this.execHome.Padding = new System.Windows.Forms.Padding(10);
             this.execHome.Size = new System.Drawing.Size(128, 53);
@@ -341,7 +396,7 @@
             this.descBox.Name = "descBox";
             this.descBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.descBox.Size = new System.Drawing.Size(410, 217);
-            this.descBox.TabIndex = 3;
+            this.descBox.TabIndex = 1;
             this.descBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.descBox_KeyDown);
             // 
             // label5
@@ -366,18 +421,18 @@
             this.label4.TabIndex = 1;
             this.label4.Text = "Klicka på bilden för att byta den";
             // 
-            // utskottsbild
+            // logo
             // 
-            this.utskottsbild.BackColor = System.Drawing.Color.Transparent;
-            this.utskottsbild.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.utskottsbild.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.utskottsbild.Location = new System.Drawing.Point(6, 6);
-            this.utskottsbild.Name = "utskottsbild";
-            this.utskottsbild.Size = new System.Drawing.Size(215, 215);
-            this.utskottsbild.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.utskottsbild.TabIndex = 0;
-            this.utskottsbild.TabStop = false;
-            this.utskottsbild.Click += new System.EventHandler(this.utskottsbild_Click);
+            this.logo.BackColor = System.Drawing.Color.Transparent;
+            this.logo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.logo.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.logo.Location = new System.Drawing.Point(6, 6);
+            this.logo.Name = "logo";
+            this.logo.Size = new System.Drawing.Size(215, 215);
+            this.logo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.logo.TabIndex = 0;
+            this.logo.TabStop = false;
+            this.logo.Click += new System.EventHandler(this.utskottsbild_Click);
             // 
             // openNewLogo
             // 
@@ -420,42 +475,153 @@
             this.colorPicker.AnyColor = true;
             this.colorPicker.SolidColorOnly = true;
             // 
-            // label8
+            // panel_create
             // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.ForeColor = System.Drawing.Color.White;
-            this.label8.Location = new System.Drawing.Point(312, 213);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(153, 19);
-            this.label8.TabIndex = 11;
-            this.label8.Text = "Välj representativ färg";
+            this.panel_create.Controls.Add(this.headline);
+            this.panel_create.Controls.Add(this.Type);
+            this.panel_create.Controls.Add(this.buttonUrl);
+            this.panel_create.Controls.Add(this.shortDesc);
+            this.panel_create.Controls.Add(this.CreateDescription);
+            this.panel_create.Controls.Add(this.label13);
+            this.panel_create.Controls.Add(this.saveExec);
+            this.panel_create.Controls.Add(this.label12);
+            this.panel_create.Controls.Add(this.label11);
+            this.panel_create.Controls.Add(this.label10);
+            this.panel_create.Controls.Add(this.label9);
+            this.panel_create.Location = new System.Drawing.Point(242, 40);
+            this.panel_create.Name = "panel_create";
+            this.panel_create.Size = new System.Drawing.Size(558, 0);
+            this.panel_create.TabIndex = 14;
             // 
-            // colorBut
+            // label13
             // 
-            this.colorBut.BackColor = System.Drawing.Color.Black;
-            this.colorBut.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.colorBut.Location = new System.Drawing.Point(242, 150);
-            this.colorBut.Name = "colorBut";
-            this.colorBut.Size = new System.Drawing.Size(294, 50);
-            this.colorBut.TabIndex = 12;
-            this.colorBut.Click += new System.EventHandler(this.colorBut_Click);
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label13.ForeColor = System.Drawing.Color.White;
+            this.label13.Location = new System.Drawing.Point(5, 163);
+            this.label13.Name = "label13";
+            this.label13.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.label13.Size = new System.Drawing.Size(165, 23);
+            this.label13.TabIndex = 21;
+            this.label13.Text = "Address till mer info";
+            this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // panel1
+            // buttonUrl
             // 
-            this.panel1.BackColor = System.Drawing.Color.White;
-            this.panel1.Location = new System.Drawing.Point(232, 140);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(314, 35);
-            this.panel1.TabIndex = 13;
+            this.buttonUrl.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonUrl.Location = new System.Drawing.Point(42, 189);
+            this.buttonUrl.MaxLength = 200;
+            this.buttonUrl.Name = "buttonUrl";
+            this.buttonUrl.Size = new System.Drawing.Size(240, 31);
+            this.buttonUrl.TabIndex = 2;
+            this.buttonUrl.MouseDown += new System.Windows.Forms.MouseEventHandler(this.UrlBox_MouseDown);
             // 
-            // panel3
+            // saveExec
             // 
-            this.panel3.BackColor = System.Drawing.Color.Black;
-            this.panel3.Location = new System.Drawing.Point(232, 175);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(314, 35);
-            this.panel3.TabIndex = 14;
+            this.saveExec.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.saveExec.AutoSize = true;
+            this.saveExec.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(85)))), ((int)(((byte)(102)))));
+            this.saveExec.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.saveExec.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.saveExec.ForeColor = System.Drawing.Color.White;
+            this.saveExec.Location = new System.Drawing.Point(451, -62);
+            this.saveExec.Name = "saveExec";
+            this.saveExec.Padding = new System.Windows.Forms.Padding(10);
+            this.saveExec.Size = new System.Drawing.Size(95, 53);
+            this.saveExec.TabIndex = 19;
+            this.saveExec.Text = "Spara";
+            this.saveExec.Click += new System.EventHandler(this.saveExec_Click);
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label12.ForeColor = System.Drawing.Color.White;
+            this.label12.Location = new System.Drawing.Point(5, 240);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(139, 23);
+            this.label12.TabIndex = 18;
+            this.label12.Text = "Lång beskrivning";
+            // 
+            // CreateDescription
+            // 
+            this.CreateDescription.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CreateDescription.Location = new System.Drawing.Point(40, 269);
+            this.CreateDescription.MaxLength = 2500;
+            this.CreateDescription.Multiline = true;
+            this.CreateDescription.Name = "CreateDescription";
+            this.CreateDescription.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.CreateDescription.Size = new System.Drawing.Size(496, 176);
+            this.CreateDescription.TabIndex = 4;
+            this.CreateDescription.TextChanged += new System.EventHandler(this.createTextBoxChange);
+            this.CreateDescription.KeyDown += new System.Windows.Forms.KeyEventHandler(this.descBox_KeyDown);
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label11.ForeColor = System.Drawing.Color.White;
+            this.label11.Location = new System.Drawing.Point(5, 86);
+            this.label11.Name = "label11";
+            this.label11.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.label11.Size = new System.Drawing.Size(295, 23);
+            this.label11.TabIndex = 16;
+            this.label11.Text = "Typ av händelse (Fest, Turnering etc.)";
+            this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // Type
+            // 
+            this.Type.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.Type.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Type.Location = new System.Drawing.Point(40, 112);
+            this.Type.MaxLength = 200;
+            this.Type.Name = "Type";
+            this.Type.Size = new System.Drawing.Size(240, 31);
+            this.Type.TabIndex = 1;
+            this.Type.TextChanged += new System.EventHandler(this.createTextBoxChange);
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.ForeColor = System.Drawing.Color.White;
+            this.label10.Location = new System.Drawing.Point(297, 9);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(256, 23);
+            this.label10.TabIndex = 14;
+            this.label10.Text = "Kort info (Plats, tid, inträde etc.)";
+            // 
+            // shortDesc
+            // 
+            this.shortDesc.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.shortDesc.Location = new System.Drawing.Point(315, 35);
+            this.shortDesc.MaxLength = 200;
+            this.shortDesc.Multiline = true;
+            this.shortDesc.Name = "shortDesc";
+            this.shortDesc.Size = new System.Drawing.Size(221, 108);
+            this.shortDesc.TabIndex = 3;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.ForeColor = System.Drawing.Color.White;
+            this.label9.Location = new System.Drawing.Point(5, 9);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(60, 23);
+            this.label9.TabIndex = 12;
+            this.label9.Text = "Rubrik";
+            // 
+            // headline
+            // 
+            this.headline.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.headline.Location = new System.Drawing.Point(40, 35);
+            this.headline.MaxLength = 200;
+            this.headline.Name = "headline";
+            this.headline.Size = new System.Drawing.Size(240, 31);
+            this.headline.TabIndex = 0;
+            this.headline.TextChanged += new System.EventHandler(this.createTextBoxChange);
             // 
             // AdminForm
             // 
@@ -466,6 +632,7 @@
             this.Controls.Add(this.ErrorReport);
             this.Controls.Add(this.loading);
             this.Controls.Add(this.panel_home);
+            this.Controls.Add(this.panel_create);
             this.Controls.Add(this.AvailibleActions);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.usermessage);
@@ -488,10 +655,12 @@
             this.action_error.PerformLayout();
             this.panel_home.ResumeLayout(false);
             this.panel_home.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.utskottsbild)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.logo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.loading)).EndInit();
             this.ErrorReport.ResumeLayout(false);
             this.ErrorReport.PerformLayout();
+            this.panel_create.ResumeLayout(false);
+            this.panel_create.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -517,7 +686,7 @@
         private System.Windows.Forms.TextBox descBox;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.PictureBox utskottsbild;
+        private System.Windows.Forms.PictureBox logo;
         private System.Windows.Forms.OpenFileDialog openNewLogo;
         private System.Windows.Forms.PictureBox loading;
         private System.Windows.Forms.Panel ErrorReport;
@@ -529,5 +698,17 @@
         private System.Windows.Forms.Panel colorBut;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.Panel panel_create;
+        private System.Windows.Forms.Label saveExec;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.TextBox CreateDescription;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.TextBox Type;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.TextBox shortDesc;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.TextBox headline;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.TextBox buttonUrl;
     }
 }

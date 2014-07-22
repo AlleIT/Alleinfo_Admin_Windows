@@ -7,14 +7,19 @@ $clientassist = new ClientAssist();
 switch($_POST['reqaction'])
 {
 	case "testCreds":
-		$clientassist->testCreds();
+		$clientassist->login();
 		break;
+		
 	case "getHome":
 		$clientassist->getHome();
 		break;
 
 	case "setHome":
 		$clientassist->setHome();
+		break;
+
+	case "setNews":
+		$clientassist->setNews();
 		break;
 
 	default:
