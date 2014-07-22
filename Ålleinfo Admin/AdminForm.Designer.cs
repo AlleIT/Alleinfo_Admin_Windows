@@ -50,6 +50,10 @@
             this.utskottsbild = new System.Windows.Forms.PictureBox();
             this.openNewLogo = new System.Windows.Forms.OpenFileDialog();
             this.loading = new System.Windows.Forms.PictureBox();
+            this.ErrorReport = new System.Windows.Forms.Panel();
+            this.ReportText = new System.Windows.Forms.Label();
+            this.action_error = new System.Windows.Forms.Panel();
+            this.label7 = new System.Windows.Forms.Label();
             this.AvailibleActions.SuspendLayout();
             this.action_Hem.SuspendLayout();
             this.action_Create.SuspendLayout();
@@ -57,6 +61,8 @@
             this.panel_home.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.utskottsbild)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.loading)).BeginInit();
+            this.ErrorReport.SuspendLayout();
+            this.action_error.SuspendLayout();
             this.SuspendLayout();
             // 
             // exit
@@ -133,6 +139,7 @@
             this.AvailibleActions.Controls.Add(this.action_Hem);
             this.AvailibleActions.Controls.Add(this.action_Create);
             this.AvailibleActions.Controls.Add(this.action_administrate);
+            this.AvailibleActions.Controls.Add(this.action_error);
             this.AvailibleActions.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.AvailibleActions.Location = new System.Drawing.Point(0, 40);
             this.AvailibleActions.Margin = new System.Windows.Forms.Padding(0);
@@ -347,10 +354,57 @@
             this.loading.Image = ((System.Drawing.Image)(resources.GetObject("loading.Image")));
             this.loading.Location = new System.Drawing.Point(243, 40);
             this.loading.Name = "loading";
-            this.loading.Size = new System.Drawing.Size(557, 0);
+            this.loading.Size = new System.Drawing.Size(557, 510);
             this.loading.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.loading.TabIndex = 12;
             this.loading.TabStop = false;
+            // 
+            // ErrorReport
+            // 
+            this.ErrorReport.Controls.Add(this.ReportText);
+            this.ErrorReport.Location = new System.Drawing.Point(242, 40);
+            this.ErrorReport.Name = "ErrorReport";
+            this.ErrorReport.Size = new System.Drawing.Size(558, 510);
+            this.ErrorReport.TabIndex = 13;
+            // 
+            // ReportText
+            // 
+            this.ReportText.AutoSize = true;
+            this.ReportText.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ReportText.ForeColor = System.Drawing.Color.White;
+            this.ReportText.Location = new System.Drawing.Point(279, 255);
+            this.ReportText.Name = "ReportText";
+            this.ReportText.Size = new System.Drawing.Size(0, 23);
+            this.ReportText.TabIndex = 0;
+            this.ReportText.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // action_error
+            // 
+            this.action_error.BackColor = System.Drawing.Color.Transparent;
+            this.action_error.Controls.Add(this.label7);
+            this.action_error.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.action_error.Location = new System.Drawing.Point(0, 230);
+            this.action_error.Margin = new System.Windows.Forms.Padding(0, 5, 0, 0);
+            this.action_error.Name = "action_error";
+            this.action_error.Size = new System.Drawing.Size(240, 70);
+            this.action_error.TabIndex = 3;
+            this.action_error.Visible = false;
+            this.action_error.Click += new System.EventHandler(this.ActionButton_Click);
+            this.action_error.Enter += new System.EventHandler(this.ActionButton_Enter);
+            this.action_error.Leave += new System.EventHandler(this.ActionButton_Leave);
+            this.action_error.MouseEnter += new System.EventHandler(this.ActionButton_Enter);
+            this.action_error.MouseLeave += new System.EventHandler(this.ActionButton_Leave);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Calibri", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.ForeColor = System.Drawing.Color.White;
+            this.label7.Location = new System.Drawing.Point(5, 16);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(55, 39);
+            this.label7.TabIndex = 0;
+            this.label7.Text = "Fel";
             // 
             // AdminForm
             // 
@@ -358,6 +412,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(85)))), ((int)(((byte)(102)))));
             this.ClientSize = new System.Drawing.Size(800, 550);
+            this.Controls.Add(this.ErrorReport);
             this.Controls.Add(this.loading);
             this.Controls.Add(this.panel_home);
             this.Controls.Add(this.AvailibleActions);
@@ -382,6 +437,10 @@
             this.panel_home.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.utskottsbild)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.loading)).EndInit();
+            this.ErrorReport.ResumeLayout(false);
+            this.ErrorReport.PerformLayout();
+            this.action_error.ResumeLayout(false);
+            this.action_error.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -410,5 +469,9 @@
         private System.Windows.Forms.PictureBox utskottsbild;
         private System.Windows.Forms.OpenFileDialog openNewLogo;
         private System.Windows.Forms.PictureBox loading;
+        private System.Windows.Forms.Panel ErrorReport;
+        private System.Windows.Forms.Label ReportText;
+        private System.Windows.Forms.Panel action_error;
+        private System.Windows.Forms.Label label7;
     }
 }

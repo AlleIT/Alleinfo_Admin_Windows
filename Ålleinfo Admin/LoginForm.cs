@@ -110,7 +110,16 @@ namespace Ålleinfo_Admin
                             }
                             else
                             {
-                                MessageBox.Show(WR.Message, "Inloggningen misslyckades", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                MessageBox.Show("Något gick fel vid inloggningen."
+                                    + Environment.NewLine
+                                    + "Försök igen eller kontakta ÅlleIT om problemet kvarstår."
+                                    + Environment.NewLine + Environment.NewLine
+                                    + "Mer info:"
+                                    + Environment.NewLine
+                                    + WR.Message,
+                                    "Inloggningen misslyckades",
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Warning);
                             }
                             return;
                         }
@@ -122,6 +131,7 @@ namespace Ålleinfo_Admin
                     });
                 }).Start();
         }
+
         #endregion
 
         private void Box_TextChanged(object sender, EventArgs e)

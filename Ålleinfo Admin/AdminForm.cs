@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
-using System.Media;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Web;
@@ -10,25 +10,8 @@ namespace Ålleinfo_Admin
 {
     public partial class AdminForm : Form
     {
-        #region mouseMoveSettings
+        public static Queue<String> errorMessages = new Queue<String>();
 
-        public const int WM_NCLBUTTONDOWN = 0xA1;
-        public const int HTCAPTION = 0x2;
-        [DllImport("User32.dll")]
-        public static extern bool ReleaseCapture();
-        [DllImport("User32.dll")]
-        public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
-
-        private void AdminForm_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                ReleaseCapture();
-                SendMessage(Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0);
-            }
-        }
-
-        #endregion
 
         public AdminForm()
         {
@@ -36,6 +19,8 @@ namespace Ålleinfo_Admin
             usermessage.Text = "Välkomna, " + Webber.Username;
             ActionButton_Click(action_Hem, null);
         }
+
+        #region defaults
 
         #region button_exit
 
@@ -75,6 +60,30 @@ namespace Ålleinfo_Admin
             c.BackColor = Color.FromArgb(0, 125, 142);
         }
         #endregion
+
+        #region mouseMoveSettings
+
+        public const int WM_NCLBUTTONDOWN = 0xA1;
+        public const int HTCAPTION = 0x2;
+        [DllImport("User32.dll")]
+        public static extern bool ReleaseCapture();
+        [DllImport("User32.dll")]
+        public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
+
+        private void AdminForm_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                ReleaseCapture();
+                SendMessage(Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0);
+            }
+        }
+
+        #endregion
+
+        #endregion
+
+        #region Loading of pages
 
         #region actionbutton
 
@@ -122,48 +131,39 @@ namespace Ålleinfo_Admin
 
         private void ActionButton_Click(object sender, EventArgs e)
         {
-            foreach (Control con in AvailibleActions.Controls)
-            {
-                con.BackColor = Color.Transparent;
-            }
-
-            Label l = sender as Label;
-
-            Control c;
-
-            if (l != null)
-            {
-                c = ((Control)sender).Parent;
-            }
-            else
-            {
-                c = (Control)sender;
-            }
-
-            c.BackColor = Color.FromArgb(0, 85, 102);
-
-            panel_home.Visible = false;
-
-            switch (c.Name)
+            switch (setButtonFocus((Control)sender))
             {
                 default:
                 case "action_Hem":
+                    ErrorReport.Height = 0;
+                    action_error.Visible = false;
+
+                    loadHome();
                     panel_home.Visible = true;
                     panel_home.Height = 510;
-                    loadHome();
                     break;
 
                 case "action_Create":
+                    ErrorReport.Height = 0;
+                    action_error.Visible = false;
+
                     loadNewNews();
                     break;
 
                 case "action_administrate":
+                    ErrorReport.Height = 0;
+                    action_error.Visible = false;
+
                     loadAllNews();
+                    break;
+
+                case "action_error":
+                    CheckForErrMsgs();
                     break;
             }
         }
         #endregion
-
+        
         #region loadPages
 
         private void loadHome()
@@ -181,6 +181,10 @@ namespace Ålleinfo_Admin
                         socUrlBox.Text = data.socialURL;
                         descBox.Text = simpleHTMLDecode(data.description);
                         loading.Height = 0;
+                    }
+                    else
+                    {
+                        CheckForErrMsgs();
                     }
                 });
 
@@ -241,6 +245,38 @@ namespace Ålleinfo_Admin
 
         #endregion
 
+        private String setButtonFocus(Control button)
+        {
+            foreach (Control con in AvailibleActions.Controls)
+            {
+                con.BackColor = Color.Transparent;
+            }
+
+            Label l = button as Label;
+
+            Control c;
+
+            if (l != null)
+            {
+                c = button.Parent;
+            }
+            else
+            {
+                c = button;
+            }
+
+            c.BackColor = Color.FromArgb(0, 85, 102);
+
+            panel_home.Visible = false;
+
+            return c.Name;
+        }
+
+        #endregion
+
+        #region Pages
+
+        #region Page_Home
         private void descBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Control && e.KeyCode == Keys.A)
@@ -282,7 +318,6 @@ namespace Ålleinfo_Admin
                     if (response.Successful)
                     {
                         execHome.Text = "Sparat!";
-                        SystemSounds.Beep.Play();
 
                         new Task(() =>
                         {
@@ -296,15 +331,12 @@ namespace Ålleinfo_Admin
                     }
                     else
                     {
-                        execHome.Text = "Misslyckades";
-
-                        MessageBox.Show("Sparandet misslyckades! Försök igen."
+                        AdminForm.errorMessages.Enqueue("Sparandet misslyckades! Försök igen."
                             + Environment.NewLine + Environment.NewLine
                             + "Felmeddelande:" + Environment.NewLine
-                            + response.Message.ToString(),
-                            "Kunde inte spara.",
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Exclamation);
+                            + response.Message.ToString());
+
+                        CheckForErrMsgs();
 
                         execHome.Text = "Verkställ";
                     }
@@ -313,8 +345,44 @@ namespace Ålleinfo_Admin
             }).Start();
         }
 
-        // HTTPUTILITY fixar inte åäö så att de blir läsbara i textrutan :( Nedan: egen fix
+        #endregion
+
+        #endregion
+
+        #region errorDisplay
+
+        private void CheckForErrMsgs()
+        {
+            if (AdminForm.errorMessages.Count == 0 && ErrorReport.Height == 0)
+                return;
+            else if (AdminForm.errorMessages.Count == 0)
+            {
+                ErrorReport.Height = 0;
+                action_error.Visible = false;
+                return;
+            }
+
+            setButtonFocus(action_error);
+
+            ErrorReport.Height = 510;
+
+            ReportText.Text = AdminForm.errorMessages.Dequeue();
+
+            ReportText.Left = ErrorReport.Width / 2 - ReportText.Width / 2;
+            ReportText.Top = ErrorReport.Height / 2 - ReportText.Height / 2;
+
+            action_error.Visible = true;
+        }
+
+        private void errorOk_Click(object sender, EventArgs e)
+        {
+            CheckForErrMsgs();
+        }
+        #endregion
+
         #region HTML Encoder/Decoder
+
+        // HTTPUTILITY fixar inte åäö så att de blir läsbara i textrutan :( Nedan: egen fix
 
         private String simpleHTMLEncode(String str)
         {
@@ -360,5 +428,6 @@ namespace Ålleinfo_Admin
         }
 
         #endregion
+
     }
 }

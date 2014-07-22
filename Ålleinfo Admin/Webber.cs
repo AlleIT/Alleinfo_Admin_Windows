@@ -117,32 +117,28 @@ namespace Ålleinfo_Admin
                 }
                 catch (Exception e)
                 {
-                    MessageBox.Show("Utskottets bild kunde inte hämtas!"
+                    AdminForm.errorMessages.Enqueue("Utskottets bild kunde inte hämtas!"
                         + Environment.NewLine + Environment.NewLine
                         + "Felmeddelande:" + Environment.NewLine
                         + e.Message.ToString()
                         + Environment.NewLine + Environment.NewLine
                         + "Ytterligare info:"
                         + Environment.NewLine
-                        + e.StackTrace.ToString(),
-                        "Utskottets bild kunde inte hämtas.",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
+                        + e.StackTrace.ToString());
+
+
                     return new HomeData(null, null, null);
                 }
             }
             else
             {
-                MessageBox.Show("Utskottets bild kunde inte hämtas!"
+                AdminForm.errorMessages.Enqueue("Utskottets bild kunde inte hämtas!"
                     + Environment.NewLine + Environment.NewLine
                     + "Felmeddelande:" + Environment.NewLine
-                    + response.Message,
-                    "Utskottets bild kunde inte hämtas.",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
+                    + response.Message);
+                return new HomeData(null, null, null);
             }
 
-            return new HomeData(null, null, null);
         }
 
         public static Webresponse SetHome(HomeData data)
