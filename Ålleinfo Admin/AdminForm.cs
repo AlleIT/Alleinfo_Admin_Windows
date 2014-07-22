@@ -358,7 +358,7 @@ namespace Ålleinfo_Admin
             else if (AdminForm.errorMessages.Count == 0)
             {
                 ErrorReport.Height = 0;
-                action_error.Visible = false;
+                action_error.Height = 0;
                 return;
             }
 
@@ -371,13 +371,9 @@ namespace Ålleinfo_Admin
             ReportText.Left = ErrorReport.Width / 2 - ReportText.Width / 2;
             ReportText.Top = ErrorReport.Height / 2 - ReportText.Height / 2;
 
-            action_error.Visible = true;
+            action_error.Height = 510;
         }
 
-        private void errorOk_Click(object sender, EventArgs e)
-        {
-            CheckForErrMsgs();
-        }
         #endregion
 
         #region HTML Encoder/Decoder
