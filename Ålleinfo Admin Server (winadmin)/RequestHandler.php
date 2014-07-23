@@ -21,6 +21,18 @@ switch($_POST['reqaction'])
 	case "setNews":
 		$clientassist->setNews();
 		break;
+		
+	case "getAllNews":
+		$clientassist->getAllNews();
+		break;
+		
+	case "getNewsCount":
+		$clientassist->getNewsCount();
+		break;
+		
+	case "removeNews":
+		$clientassist->removeNews();
+		break;
 
 	default:
 		echo "Inte implementerad!";

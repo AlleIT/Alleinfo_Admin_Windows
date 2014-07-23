@@ -11,6 +11,8 @@ namespace Ålleinfo_Admin
 {
     public partial class AdminForm : Form
     {
+        public static AdminForm adminForm;
+
         public static Queue<String> errorMessages = new Queue<String>();
 
         private actionPage currentPage;
@@ -28,6 +30,11 @@ namespace Ålleinfo_Admin
             InitializeComponent();
             usermessage.Text = "Välkomna, " + Webber.Username;
             ActionButton_Click(action_Hem, null);
+
+            newsPresenter.VerticalScroll.Maximum = 0;
+            newsPresenter.AutoScroll = true;
+
+            adminForm = this;
         }
 
         #region defaults
@@ -186,6 +193,7 @@ namespace Ålleinfo_Admin
             }
             panel_home.Height = 0;
             panel_create.Height = 0;
+            panel_administrate.Height = 0;
             loading.Height = 0;
 
             switch (setButtonFocus((Control)sender))
@@ -215,6 +223,8 @@ namespace Ålleinfo_Admin
                     currentPage = actionPage.Administrate;
 
                     loadAllNews();
+                    panel_administrate.Height = 510;
+                    newsPresenter.Focus();
                     break;
 
                 case "action_error":
@@ -231,22 +241,28 @@ namespace Ålleinfo_Admin
 
             new Task(() =>
             {
-                HomeData data = Webber.GetHome();
-                this.Invoke((MethodInvoker)delegate
+                try
                 {
-                    if (data.logo != null)
+                    HomeData data = Webber.GetHome();
+
+                    this.Invoke((MethodInvoker)delegate
                     {
                         logo.Image = data.logo;
                         socUrlBox.Text = data.socialURL;
                         descBox.Text = simpleHTMLDecode(data.description);
                         colorBut.BackColor = ColorTranslator.FromHtml(data.hexaColor);
                         loading.Height = 0;
-                    }
-                    else
+                    });
+
+                }
+                catch (GeneralWebberException)
+                {
+                    this.Invoke((MethodInvoker)delegate
                     {
+                        loading.Height = 0;
                         CheckForErrMsgs();
-                    }
-                });
+                    });
+                }
 
             }).Start();
 
@@ -270,15 +286,32 @@ namespace Ålleinfo_Admin
         private void loadAllNews()
         {
             loading.Height = 510;
+            clearNews();
+            noNewsLabel.Visible = false;
 
             new Task(() =>
             {
-
-                this.Invoke((MethodInvoker)delegate
+                try
                 {
+                    Webber.GetAllNews();
 
-                    loading.Height = 0;
-                });
+                    this.Invoke((MethodInvoker)delegate
+                    {
+                        if (newsPresenter.Controls.Count == 0)
+                            noNewsLabel.Visible = true;
+
+                        loading.Height = 0;
+                    });
+
+                }
+                catch (GeneralWebberException)
+                {
+                    this.Invoke((MethodInvoker)delegate
+                    {
+                        loading.Height = 0;
+                        CheckForErrMsgs();
+                    });
+                }
 
             }).Start();
 
@@ -324,7 +357,7 @@ namespace Ålleinfo_Admin
             }
 
             c.BackColor = Color.FromArgb(0, 85, 102);
-            
+
             return c.Name;
         }
 
@@ -354,12 +387,11 @@ namespace Ålleinfo_Admin
 
             new Task(() =>
             {
-                Webresponse response = Webber.SetHome(data);
-
-                this.Invoke((MethodInvoker)delegate
+                try
                 {
+                    Webresponse response = Webber.SetHome(data);
 
-                    if (response.Successful)
+                    this.Invoke((MethodInvoker)delegate
                     {
                         execHome.Text = "Sparat!";
 
@@ -372,19 +404,18 @@ namespace Ålleinfo_Admin
 
                             });
                         }).Start();
-                    }
-                    else
+                    });
+
+                }
+                catch (GeneralWebberException)
+                {
+                    this.Invoke((MethodInvoker)delegate
                     {
-                        AdminForm.errorMessages.Enqueue("Sparandet misslyckades! Försök igen."
-                            + Environment.NewLine + Environment.NewLine
-                            + "Felmeddelande:" + Environment.NewLine
-                            + response.Message.ToString());
+                        execHome.Text = "Verkställ";
 
                         CheckForErrMsgs();
-
-                        execHome.Text = "Verkställ";
-                    }
-                });
+                    });
+                }
 
             }).Start();
         }
@@ -429,12 +460,11 @@ namespace Ålleinfo_Admin
 
             new Task(() =>
             {
-                Webresponse response = Webber.SetNews(data);
-
-                this.Invoke((MethodInvoker)delegate
+                try
                 {
+                    Webresponse response = Webber.SetNews(data);
 
-                    if (response.Successful)
+                    this.Invoke((MethodInvoker)delegate
                     {
                         saveExec.Text = "Sparat!";
 
@@ -447,19 +477,18 @@ namespace Ålleinfo_Admin
 
                             });
                         }).Start();
-                    }
-                    else
+                    });
+
+                }
+                catch (GeneralWebberException)
+                {
+                    this.Invoke((MethodInvoker)delegate
                     {
-                        AdminForm.errorMessages.Enqueue("Sparandet misslyckades! Försök igen."
-                            + Environment.NewLine + Environment.NewLine
-                            + "Felmeddelande:" + Environment.NewLine
-                            + response.Message.ToString());
+                        saveExec.Text = "Spara";
 
                         CheckForErrMsgs();
-
-                        saveExec.Text = "Spara";
-                    }
-                });
+                    });
+                }
 
             }).Start();
 
@@ -474,11 +503,54 @@ namespace Ålleinfo_Admin
 
         #endregion
 
+        #region Page_Administrate
+
+        public void addNews(NewsItem NI)
+        {
+            if(InvokeRequired)
+            {
+                Invoke((MethodInvoker)delegate
+                {
+                    newsPresenter.Controls.Add(NI.container);
+                });
+            }
+            else
+                newsPresenter.Controls.Add(NI.container);
+        }
+
+        public void removeNewsDisplay(NewsItem NI)
+        {
+            if (InvokeRequired)
+            {
+                Invoke((MethodInvoker)delegate
+                {
+                    newsPresenter.Controls.Remove(NI.container);
+                });
+            }
+            else
+                newsPresenter.Controls.Remove(NI.container);
+        }
+
+        public void clearNews()
+        {
+            if (InvokeRequired)
+            {
+                Invoke((MethodInvoker)delegate
+                {
+                    newsPresenter.Controls.Clear();
+                });
+            }
+            else
+            newsPresenter.Controls.Clear();
+        }
+
+        #endregion
+
         #endregion
 
         #region errorDisplay
 
-        private void CheckForErrMsgs()
+        public void CheckForErrMsgs()
         {
             if (AdminForm.errorMessages.Count == 0 && ErrorReport.Height == 0)
                 return;

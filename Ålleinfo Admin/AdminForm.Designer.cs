@@ -60,17 +60,21 @@
             this.ReportText = new System.Windows.Forms.Label();
             this.colorPicker = new System.Windows.Forms.ColorDialog();
             this.panel_create = new System.Windows.Forms.Panel();
-            this.label13 = new System.Windows.Forms.Label();
+            this.headline = new System.Windows.Forms.TextBox();
+            this.Type = new System.Windows.Forms.TextBox();
             this.buttonUrl = new System.Windows.Forms.TextBox();
+            this.shortDesc = new System.Windows.Forms.TextBox();
+            this.CreateDescription = new System.Windows.Forms.TextBox();
+            this.label13 = new System.Windows.Forms.Label();
             this.saveExec = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
-            this.CreateDescription = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
-            this.Type = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
-            this.shortDesc = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
-            this.headline = new System.Windows.Forms.TextBox();
+            this.panel_administrate = new System.Windows.Forms.Panel();
+            this.newsPresenter = new System.Windows.Forms.FlowLayoutPanel();
+            this.label14 = new System.Windows.Forms.Label();
+            this.noNewsLabel = new System.Windows.Forms.Label();
             this.AvailibleActions.SuspendLayout();
             this.action_Hem.SuspendLayout();
             this.action_Create.SuspendLayout();
@@ -81,6 +85,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.loading)).BeginInit();
             this.ErrorReport.SuspendLayout();
             this.panel_create.SuspendLayout();
+            this.panel_administrate.SuspendLayout();
             this.SuspendLayout();
             // 
             // exit
@@ -493,6 +498,60 @@
             this.panel_create.Size = new System.Drawing.Size(558, 0);
             this.panel_create.TabIndex = 14;
             // 
+            // headline
+            // 
+            this.headline.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.headline.Location = new System.Drawing.Point(40, 35);
+            this.headline.MaxLength = 200;
+            this.headline.Name = "headline";
+            this.headline.Size = new System.Drawing.Size(240, 31);
+            this.headline.TabIndex = 0;
+            this.headline.TextChanged += new System.EventHandler(this.createTextBoxChange);
+            // 
+            // Type
+            // 
+            this.Type.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.Type.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Type.Location = new System.Drawing.Point(40, 112);
+            this.Type.MaxLength = 200;
+            this.Type.Name = "Type";
+            this.Type.Size = new System.Drawing.Size(240, 31);
+            this.Type.TabIndex = 1;
+            this.Type.TextChanged += new System.EventHandler(this.createTextBoxChange);
+            // 
+            // buttonUrl
+            // 
+            this.buttonUrl.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonUrl.Location = new System.Drawing.Point(42, 189);
+            this.buttonUrl.MaxLength = 200;
+            this.buttonUrl.Name = "buttonUrl";
+            this.buttonUrl.Size = new System.Drawing.Size(240, 31);
+            this.buttonUrl.TabIndex = 2;
+            this.buttonUrl.MouseDown += new System.Windows.Forms.MouseEventHandler(this.UrlBox_MouseDown);
+            // 
+            // shortDesc
+            // 
+            this.shortDesc.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.shortDesc.Location = new System.Drawing.Point(315, 35);
+            this.shortDesc.MaxLength = 200;
+            this.shortDesc.Multiline = true;
+            this.shortDesc.Name = "shortDesc";
+            this.shortDesc.Size = new System.Drawing.Size(221, 108);
+            this.shortDesc.TabIndex = 3;
+            // 
+            // CreateDescription
+            // 
+            this.CreateDescription.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CreateDescription.Location = new System.Drawing.Point(40, 269);
+            this.CreateDescription.MaxLength = 2500;
+            this.CreateDescription.Multiline = true;
+            this.CreateDescription.Name = "CreateDescription";
+            this.CreateDescription.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.CreateDescription.Size = new System.Drawing.Size(496, 176);
+            this.CreateDescription.TabIndex = 4;
+            this.CreateDescription.TextChanged += new System.EventHandler(this.createTextBoxChange);
+            this.CreateDescription.KeyDown += new System.Windows.Forms.KeyEventHandler(this.descBox_KeyDown);
+            // 
             // label13
             // 
             this.label13.AutoSize = true;
@@ -505,16 +564,6 @@
             this.label13.TabIndex = 21;
             this.label13.Text = "Address till mer info";
             this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // buttonUrl
-            // 
-            this.buttonUrl.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonUrl.Location = new System.Drawing.Point(42, 189);
-            this.buttonUrl.MaxLength = 200;
-            this.buttonUrl.Name = "buttonUrl";
-            this.buttonUrl.Size = new System.Drawing.Size(240, 31);
-            this.buttonUrl.TabIndex = 2;
-            this.buttonUrl.MouseDown += new System.Windows.Forms.MouseEventHandler(this.UrlBox_MouseDown);
             // 
             // saveExec
             // 
@@ -544,19 +593,6 @@
             this.label12.TabIndex = 18;
             this.label12.Text = "Lång beskrivning";
             // 
-            // CreateDescription
-            // 
-            this.CreateDescription.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CreateDescription.Location = new System.Drawing.Point(40, 269);
-            this.CreateDescription.MaxLength = 2500;
-            this.CreateDescription.Multiline = true;
-            this.CreateDescription.Name = "CreateDescription";
-            this.CreateDescription.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.CreateDescription.Size = new System.Drawing.Size(496, 176);
-            this.CreateDescription.TabIndex = 4;
-            this.CreateDescription.TextChanged += new System.EventHandler(this.createTextBoxChange);
-            this.CreateDescription.KeyDown += new System.Windows.Forms.KeyEventHandler(this.descBox_KeyDown);
-            // 
             // label11
             // 
             this.label11.AutoSize = true;
@@ -570,17 +606,6 @@
             this.label11.Text = "Typ av händelse (Fest, Turnering etc.)";
             this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // Type
-            // 
-            this.Type.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.Type.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Type.Location = new System.Drawing.Point(40, 112);
-            this.Type.MaxLength = 200;
-            this.Type.Name = "Type";
-            this.Type.Size = new System.Drawing.Size(240, 31);
-            this.Type.TabIndex = 1;
-            this.Type.TextChanged += new System.EventHandler(this.createTextBoxChange);
-            // 
             // label10
             // 
             this.label10.AutoSize = true;
@@ -591,16 +616,6 @@
             this.label10.Size = new System.Drawing.Size(256, 23);
             this.label10.TabIndex = 14;
             this.label10.Text = "Kort info (Plats, tid, inträde etc.)";
-            // 
-            // shortDesc
-            // 
-            this.shortDesc.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.shortDesc.Location = new System.Drawing.Point(315, 35);
-            this.shortDesc.MaxLength = 200;
-            this.shortDesc.Multiline = true;
-            this.shortDesc.Name = "shortDesc";
-            this.shortDesc.Size = new System.Drawing.Size(221, 108);
-            this.shortDesc.TabIndex = 3;
             // 
             // label9
             // 
@@ -613,15 +628,48 @@
             this.label9.TabIndex = 12;
             this.label9.Text = "Rubrik";
             // 
-            // headline
+            // panel_administrate
             // 
-            this.headline.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.headline.Location = new System.Drawing.Point(40, 35);
-            this.headline.MaxLength = 200;
-            this.headline.Name = "headline";
-            this.headline.Size = new System.Drawing.Size(240, 31);
-            this.headline.TabIndex = 0;
-            this.headline.TextChanged += new System.EventHandler(this.createTextBoxChange);
+            this.panel_administrate.Controls.Add(this.label14);
+            this.panel_administrate.Controls.Add(this.noNewsLabel);
+            this.panel_administrate.Controls.Add(this.newsPresenter);
+            this.panel_administrate.Font = new System.Drawing.Font("Calibri", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.panel_administrate.ForeColor = System.Drawing.Color.White;
+            this.panel_administrate.Location = new System.Drawing.Point(242, 40);
+            this.panel_administrate.Name = "panel_administrate";
+            this.panel_administrate.Size = new System.Drawing.Size(558, 510);
+            this.panel_administrate.TabIndex = 15;
+            // 
+            // newsPresenter
+            // 
+            this.newsPresenter.BackColor = System.Drawing.Color.Transparent;
+            this.newsPresenter.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.newsPresenter.Location = new System.Drawing.Point(0, 50);
+            this.newsPresenter.Name = "newsPresenter";
+            this.newsPresenter.Padding = new System.Windows.Forms.Padding(10);
+            this.newsPresenter.Size = new System.Drawing.Size(558, 440);
+            this.newsPresenter.TabIndex = 0;
+            this.newsPresenter.WrapContents = false;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(102, 10);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(381, 29);
+            this.label14.TabIndex = 1;
+            this.label14.Text = "Klicka på nyheten för att redigera den";
+            // 
+            // noNewsLabel
+            // 
+            this.noNewsLabel.AutoSize = true;
+            this.noNewsLabel.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.noNewsLabel.Location = new System.Drawing.Point(205, 60);
+            this.noNewsLabel.Name = "noNewsLabel";
+            this.noNewsLabel.Size = new System.Drawing.Size(174, 23);
+            this.noNewsLabel.TabIndex = 0;
+            this.noNewsLabel.Text = "Inga nyheter hittades";
+            this.noNewsLabel.Visible = false;
             // 
             // AdminForm
             // 
@@ -633,6 +681,7 @@
             this.Controls.Add(this.loading);
             this.Controls.Add(this.panel_home);
             this.Controls.Add(this.panel_create);
+            this.Controls.Add(this.panel_administrate);
             this.Controls.Add(this.AvailibleActions);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.usermessage);
@@ -661,6 +710,8 @@
             this.ErrorReport.PerformLayout();
             this.panel_create.ResumeLayout(false);
             this.panel_create.PerformLayout();
+            this.panel_administrate.ResumeLayout(false);
+            this.panel_administrate.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -710,5 +761,9 @@
         private System.Windows.Forms.TextBox headline;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.TextBox buttonUrl;
+        private System.Windows.Forms.Panel panel_administrate;
+        private System.Windows.Forms.FlowLayoutPanel newsPresenter;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label noNewsLabel;
     }
 }

@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Net;
 using System.Text;
+using System.Web;
+using System.Web.Script.Serialization;
 using System.Windows.Forms;
 
 namespace Ålleinfo_Admin
@@ -46,6 +49,12 @@ namespace Ålleinfo_Admin
         const String action_setHome = "setHome";
 
         const String action_setNews = "setNews";
+
+        const String action_getAllNews = "getAllNews";
+
+        const String action_getNewsCount = "getNewsCount";
+
+        const String action_removeNews = "removeNews";
 
         const String acceptedMessage = "accepted";
 
@@ -112,13 +121,10 @@ namespace Ålleinfo_Admin
 
             performDefaultWebRequest(reqParams, out response);
 
-
             if (response.Successful)
             {
                 try
                 {
-                    response.Message = response.Message.Substring(acceptedMessage.Length);
-
                     HttpWebRequest httpWebRequest = (HttpWebRequest)HttpWebRequest.Create(response.Message.Substring(0, response.Message.IndexOf(",")));
                     HttpWebResponse httpWebReponse = (HttpWebResponse)httpWebRequest.GetResponse();
                     Stream stream = httpWebReponse.GetResponseStream();
@@ -142,8 +148,7 @@ namespace Ålleinfo_Admin
                         + Environment.NewLine
                         + e.StackTrace.ToString());
 
-
-                    return new HomeData(null, null, null, null);
+                    throw new GeneralWebberException();
                 }
             }
             else
@@ -152,7 +157,8 @@ namespace Ålleinfo_Admin
                     + Environment.NewLine + Environment.NewLine
                     + "Felmeddelande:" + Environment.NewLine
                     + response.Message);
-                return new HomeData(null, null, null, null);
+
+                throw new GeneralWebberException();
             }
 
         }
@@ -171,6 +177,16 @@ namespace Ålleinfo_Admin
             reqParams.Add(colorParam, data.hexaColor);
 
             performDefaultWebRequest(reqParams, out response);
+
+            if(!response.Successful)
+            {
+                AdminForm.errorMessages.Enqueue("Sparandet misslyckades! Försök igen."
+                    + Environment.NewLine + Environment.NewLine
+                    + "Felmeddelande:" + Environment.NewLine
+                    + response.Message.ToString());
+
+                throw new GeneralWebberException();
+            }
 
             return response;
         }
@@ -197,12 +213,138 @@ namespace Ålleinfo_Admin
 
             performDefaultWebRequest(reqParams, out response);
 
+            if(!response.Successful)
+            {
+                AdminForm.errorMessages.Enqueue("Sparandet misslyckades! Försök igen."
+                            + Environment.NewLine + Environment.NewLine
+                            + "Felmeddelande:" + Environment.NewLine
+                            + response.Message.ToString());
+
+                throw new GeneralWebberException();
+            }
+
             return response;
         }
 
         #endregion
 
         #region adminAll
+        public static void GetAllNews()
+        {
+            if (requestNewsCount() == 0)
+                return;
+            
+            Webresponse response;
+
+            NameValueCollection reqParams = new NameValueCollection();
+            reqParams.Add(userParam, Username);
+            reqParams.Add(passParam, Password);
+            reqParams.Add(actionParam, action_getAllNews);
+
+            performDefaultWebRequest(reqParams, out response);
+
+            if (!response.Successful)
+            {
+                AdminForm.errorMessages.Enqueue("Kunde inte hämta nyheterna från servern!"
+                    + Environment.NewLine + Environment.NewLine
+                    + "Felmeddelande:" + Environment.NewLine
+                    + response.Message.ToString());
+
+                throw new GeneralWebberException();
+            }
+
+            response.Message = simpleHTMLDecode(response.Message);
+
+            try
+            {
+                NewsDataArray.newsDataList.Clear();
+                new JavaScriptSerializer().Deserialize<List<NewsData>>(response.Message);
+            }
+            catch (Exception e)
+            {
+                AdminForm.errorMessages.Enqueue("Kunde inte hämta nyheterna från servern!"
+                    + Environment.NewLine + Environment.NewLine
+                    + "Felmeddelande:" + Environment.NewLine
+                    + e.Message.ToString()
+                    + Environment.NewLine + Environment.NewLine
+                    + "Ytterligare info:"
+                    + Environment.NewLine
+                    + e.StackTrace.ToString());
+
+                throw new GeneralWebberException();
+            }
+
+            if (requestNewsCount() == NewsDataArray.newsDataList.Count)
+            {
+                foreach (NewsData ND in NewsDataArray.newsDataList)
+                {
+                    new NewsItem(ND);
+                }
+            }
+            else
+            {
+                AdminForm.errorMessages.Enqueue("Serverns svar stämmer inte med det rapporterade antalet nyheter."
+                    + Environment.NewLine + Environment.NewLine
+                    + "Försök igen eller kontakta ÅlleIT om problemet kvarstår");
+
+                throw new GeneralWebberException();
+            }
+
+        }
+
+        private static int requestNewsCount()
+        {
+            Webresponse response;
+
+            NameValueCollection reqParams = new NameValueCollection();
+            reqParams.Add(userParam, Username);
+            reqParams.Add(passParam, Password);
+            reqParams.Add(actionParam, action_getNewsCount);
+
+            performDefaultWebRequest(reqParams, out response);
+
+            int i;
+
+            if(int.TryParse(response.Message, out i))
+            {
+                return i;
+            }
+            else
+            {
+                AdminForm.errorMessages.Enqueue("Serverns svar kunde inte tolkas."
+                    + Environment.NewLine + Environment.NewLine
+                    + "Mer info:" + Environment.NewLine
+                    + response.Message);
+
+                throw new GeneralWebberException();
+            }
+
+        }
+
+        public static void removeNews(int id)
+        {
+            Webresponse response;
+
+            NameValueCollection reqParams = new NameValueCollection();
+            reqParams.Add(userParam, Username);
+            reqParams.Add(passParam, Password);
+            reqParams.Add(actionParam, action_removeNews);
+            reqParams.Add(idParam, id.ToString());
+
+            performDefaultWebRequest(reqParams, out response);
+
+            if (!response.Successful)
+            {
+                AdminForm.errorMessages.Enqueue("Borttagandet misslyckades."
+                    + Environment.NewLine + Environment.NewLine
+                    + "Mer info:"
+                    + Environment.NewLine
+                    + response.Message);
+
+                throw new GeneralWebberException();
+            }
+
+        }
 
         // TODO: Rewrite. Just a copy of GetHome as of now.
         public static HomeData GetSpecificNews()
@@ -215,30 +357,6 @@ namespace Ålleinfo_Admin
             reqParams.Add(userParam, Username);
             reqParams.Add(passParam, Password);
             reqParams.Add(actionParam, action_getHome);
-
-            using (WebClient WC = new WebClient())
-            {
-                try
-                {
-                    response.Message = Encoding.UTF8.GetString(WC.UploadValues(URI, reqParams));
-
-                    if (String.IsNullOrWhiteSpace(response.Message))
-                    {
-                        response.Message = Error_NoResponse;
-                    }
-
-                    response.Successful = response.Message.Substring(0, Math.Min(acceptedMessage.Length, response.Message.Length)).Equals(acceptedMessage, StringComparison.OrdinalIgnoreCase);
-
-                    if (response.Successful)
-                    {
-                        response.Message = response.Message.Substring(acceptedMessage.Length);
-                    }
-                }
-                catch (Exception e)
-                {
-                    response = new Webresponse(false, e.Message);
-                }
-            }
 
             if (response.Successful)
             {
@@ -265,8 +383,7 @@ namespace Ålleinfo_Admin
                         + Environment.NewLine
                         + e.StackTrace.ToString());
 
-
-                    return new HomeData(null, null, null, null);
+                    throw new GeneralWebberException();
                 }
             }
             else
@@ -275,7 +392,8 @@ namespace Ålleinfo_Admin
                     + Environment.NewLine + Environment.NewLine
                     + "Felmeddelande:" + Environment.NewLine
                     + response.Message);
-                return new HomeData(null, null, null, null);
+
+                throw new GeneralWebberException();
             }
 
         }
@@ -298,6 +416,10 @@ namespace Ålleinfo_Admin
                     }
 
                     response.Successful = response.Message.Contains(acceptedMessage);
+
+                    if (response.Successful)
+                        response.Message = response.Message.Substring(0, response.Message.IndexOf(acceptedMessage))
+                            + response.Message.Substring(response.Message.IndexOf(acceptedMessage) + acceptedMessage.Length);
                 }
                 catch (Exception e)
                 {
@@ -305,6 +427,8 @@ namespace Ålleinfo_Admin
                 }
             }
         }
+
+        #region Utilities
 
         private static String imageToBase64(Image image)
         {
@@ -318,6 +442,65 @@ namespace Ålleinfo_Admin
                 string base64String = Convert.ToBase64String(imageBytes);
                 return base64String;
             }
+        }
+
+        #region HTML Encoder/Decoder
+
+        // HTTPUTILITY fixar inte åäö så att de blir läsbara i textrutan :( Nedan: egen fix
+
+        private static String simpleHTMLEncode(String str)
+        {
+            str.Replace("å", "&aring;");
+            str.Replace("Å", "&Aring;");
+            str.Replace("ä", "&auml;");
+            str.Replace("Ä", "&Auml;");
+            str.Replace("ö", "&ouml;");
+            str.Replace("Ö", "&Ouml;");
+
+            String split = str;
+            str = "";
+
+            String[] divider = { Environment.NewLine };
+
+            foreach (String s in split.Split(divider, StringSplitOptions.None))
+            {
+                str += s + "<br>";
+            }
+
+            str = str.Substring(0, str.Length - 4);
+
+            return str;
+        }
+
+        private static String simpleHTMLDecode(String str)
+        {
+            str = HttpUtility.HtmlDecode(str);
+
+            String split = str;
+            str = "";
+
+            String[] divider = { "<br>" };
+
+            foreach (String s in split.Split(divider, StringSplitOptions.None))
+            {
+                str += s + Environment.NewLine;
+            }
+
+            str = str.Substring(0, str.Length - Environment.NewLine.Length);
+
+            return str;
+        }
+
+        #endregion
+
+        #endregion
+    }
+
+    public class GeneralWebberException : Exception
+    {
+        public GeneralWebberException()
+        {
+
         }
     }
 }

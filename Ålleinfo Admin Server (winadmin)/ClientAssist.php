@@ -3,7 +3,7 @@ require_once("../webadmin/core/Classes/Database.php");
 
 Class ClientAssist extends Database {
 
-	private $query;
+	const ACCEPTEDMSG = "accepted";
 
 	public function login() {
 		$username = htmlentities(strip_tags($_POST['username']));
@@ -16,7 +16,7 @@ Class ClientAssist extends Database {
        	$query->execute();
 		
        	if ($query->rowCount() == 1){
-			echo "accepted";
+			echo self::ACCEPTEDMSG;
         } else {
            	echo "Inloggningen misslyckades.";
         }
@@ -34,7 +34,7 @@ Class ClientAssist extends Database {
 		
        	if ($query->rowCount() == 1){
 			$row = $query->fetch(PDO::FETCH_ASSOC);
-            echo "accepted" . $row['logoPath'] . "," . $row['description'] . "," . $row['socialLink'] . $row['color'];
+            echo self::ACCEPTEDMSG . $row['logoPath'] . "," . $row['description'] . "," . $row['socialLink'] . $row['color'];
         } else {
             echo "Felaktiga användaruppgifter.";
         }
@@ -68,13 +68,13 @@ Class ClientAssist extends Database {
 		$socialLink = htmlentities(strip_tags($_POST['socialURL']));
 		$color = htmlentities(strip_tags($_POST['color']));
 
-		$query = $this->_link->prepare("UPDATE `alleit`.`accounts` SET `description` = :description, `socialLink` = :sociallink, `color` = :color WHERE `accounts`.`id` =".$row['id']);
+		$query = $this->_link->prepare("UPDATE `accounts` SET `description` = :description, `socialLink` = :sociallink, `color` = :color WHERE `accounts`.`id` =".$row['id']);
                 $query->bindParam(":description", $description, PDO::PARAM_STR);
                 $query->bindParam(":sociallink", $socialLink, PDO::PARAM_STR);
                 $query->bindParam(":color", $color, PDO::PARAM_STR);
                 $query->execute();
 
-                echo "accepted";
+                echo self::ACCEPTEDMSG;
 	}
 	
 	public function setNews() {
@@ -103,7 +103,7 @@ Class ClientAssist extends Database {
 				
 		if($id == -1)
 		{
-			$query = $this->_link->prepare("INSERT INTO `alleit`.`elevkaren_news` (`headline`, `shortInfo`, `description`, `butURL`, `type`, `handler`, `pubDate`) VALUES (:headline, :shortDesc, :description, :butUrl, :type, :handler, :date);");
+			$query = $this->_link->prepare("INSERT INTO `elevkaren_news` (`headline`, `shortInfo`, `description`, `butURL`, `type`, `handler`, `pubDate`) VALUES (:headline, :shortDesc, :description, :butUrl, :type, :handler, :date);");
             $query->bindParam(":headline", $headline, PDO::PARAM_STR);
             $query->bindParam(":shortDesc", $shortDesc, PDO::PARAM_STR);
             $query->bindParam(":description", $description, PDO::PARAM_STR);
@@ -113,9 +113,9 @@ Class ClientAssist extends Database {
             $query->bindParam(":date", $date, PDO::PARAM_STR);
             $query->execute();
 
-            echo "accepted";
+            echo self::ACCEPTEDMSG;
 		} else {
-			$query = $this->_link->prepare("UPDATE `alleit`.`elevkaren_news` SET  `headline` =  :headline, `shortInfo` =  :shortDesc, `description` =  :description, `butURL` =  :butUrl, `type` =  :type, `handler` =  :handler WHERE  `elevkaren_news`.`id` = :id;");
+			$query = $this->_link->prepare("UPDATE `elevkaren_news` SET  `headline` =  :headline, `shortInfo` =  :shortDesc, `description` =  :description, `butURL` =  :butUrl, `type` =  :type, `handler` =  :handler WHERE  `elevkaren_news`.`id` = :id;");
             $query->bindParam(":headline", $headline, PDO::PARAM_STR);
             $query->bindParam(":shortDesc", $shortDesc, PDO::PARAM_STR);
             $query->bindParam(":description", $description, PDO::PARAM_STR);
@@ -125,8 +125,90 @@ Class ClientAssist extends Database {
             $query->bindParam(":id", $id, PDO::PARAM_STR);
             $query->execute();
 			
-            echo "accepted";
+            echo self::ACCEPTEDMSG;
 		}
+	}
+	
+	public function getAllNews()
+	{
+		$username = htmlentities(strip_tags($_POST['username']));
+        $password = htmlentities(hash("SHA512", $_POST['password']));
+		
+       	// check if user exist
+       	$query = $this->_link->prepare("SELECT * FROM accounts WHERE username = :username AND password = :password");
+       	$query->bindParam(":username", $username, PDO::PARAM_STR);
+       	$query->bindParam(":password", $password, PDO::PARAM_STR);
+       	$query->execute();
+		
+       	if ($query->rowCount() != 1){
+			die("Felaktiga användaruppgifter");
+		}
+
+		$userDetails = $query->fetch(PDO::FETCH_ASSOC);
+		
+       	$query = $this->_link->prepare("SELECT * FROM `elevkaren_news` WHERE handler = :handler ORDER BY `id` DESC");
+       	$query->bindParam(":handler", $userDetails['handler'], PDO::PARAM_STR);
+       	$query->execute();
+	
+		$rows = array();
+	
+		if($query->execute())
+		{			
+			while($row = $query->fetch(PDO::FETCH_ASSOC))
+			{
+				$rows[] = $row;
+			}
+		}
+		echo self::ACCEPTEDMSG . json_encode($rows);
+	}
+	
+	public function getNewsCount()
+	{
+		$username = htmlentities(strip_tags($_POST['username']));
+        $password = htmlentities(hash("SHA512", $_POST['password']));
+		
+       	// check if user exist
+       	$query = $this->_link->prepare("SELECT * FROM accounts WHERE username = :username AND password = :password");
+       	$query->bindParam(":username", $username, PDO::PARAM_STR);
+       	$query->bindParam(":password", $password, PDO::PARAM_STR);
+       	$query->execute();
+		
+       	if ($query->rowCount() != 1){
+			die("Felaktiga användaruppgifter");
+		}
+
+		$userDetails = $query->fetch(PDO::FETCH_ASSOC);
+		
+       	$query = $this->_link->prepare("SELECT * FROM `elevkaren_news` WHERE handler = :handler");
+       	$query->bindParam(":handler", $userDetails['handler'], PDO::PARAM_STR);
+       	$query->execute();
+		
+		echo self::ACCEPTEDMSG . $query->rowCount();
+	}
+	
+	public function removeNews()
+	{
+		$username = htmlentities(strip_tags($_POST['username']));
+        $password = htmlentities(hash("SHA512", $_POST['password']));
+		
+       	// check if user exist
+       	$query = $this->_link->prepare("SELECT * FROM accounts WHERE username = :username AND password = :password");
+       	$query->bindParam(":username", $username, PDO::PARAM_STR);
+       	$query->bindParam(":password", $password, PDO::PARAM_STR);
+       	$query->execute();
+		
+       	if ($query->rowCount() != 1){
+			die("Felaktiga användaruppgifter");
+		}
+		
+		$id = htmlentities(strip_tags($_POST['id']));
+		
+       	$query = $this->_link->prepare("DELETE FROM `elevkaren_news` WHERE `elevkaren_news`.`id` = :id");
+       	$query->bindParam(":id", $id, PDO::PARAM_STR);
+       	$query->execute();
+		
+		echo self::ACCEPTEDMSG;
+	
 	}
 }
 
