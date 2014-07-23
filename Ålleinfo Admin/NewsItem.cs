@@ -134,7 +134,7 @@ namespace Ålleinfo_Admin
             {
                 try
                 {
-                    Webber.removeNews(data.id);
+                    Webber.removeNews((int)data.id);
 
                     AdminForm.adminForm.removeNewsDisplay(this);
                 }
