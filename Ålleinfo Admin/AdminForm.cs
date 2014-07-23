@@ -17,6 +17,8 @@ namespace Ålleinfo_Admin
 
         private actionPage currentPage;
 
+        private NewsData currentNewsData;
+
         private Boolean isErrorShowing
         {
             get
@@ -195,6 +197,7 @@ namespace Ålleinfo_Admin
             panel_create.Height = 0;
             panel_administrate.Height = 0;
             loading.Height = 0;
+            currentNewsData = null;
 
             switch (setButtonFocus((Control)sender))
             {
@@ -281,6 +284,31 @@ namespace Ålleinfo_Admin
             headline.BackColor = Color.White;
             Type.BackColor = Color.White;
             CreateDescription.BackColor = Color.White;
+        }
+
+        public void loadCreateNewsWithData(NewsData data)
+        {
+            ErrorReport.Height = 0;
+            action_error.Visible = false;
+            currentPage = actionPage.Create;
+            loading.Height = 0;
+            panel_administrate.Height = 0;
+
+            headline.Text = data.headline;
+            Type.Text = data.type;
+            shortDesc.Text = data.shortInfo;
+            buttonUrl.Text = data.butURL;
+            CreateDescription.Text = data.description;
+
+            headline.BackColor = Color.White;
+            Type.BackColor = Color.White;
+            CreateDescription.BackColor = Color.White;
+
+            currentNewsData = data;
+
+            setButtonFocus(action_Create);
+
+            panel_create.Height = 510;
         }
 
         private void loadAllNews()
@@ -456,7 +484,14 @@ namespace Ålleinfo_Admin
 
             saveExec.Text = "Vänta...";
 
-            CreateData data = new CreateData(simpleHTMLEncode(headline.Text), simpleHTMLEncode(shortDesc.Text), simpleHTMLEncode(Type.Text), buttonUrl.Text, simpleHTMLEncode(CreateDescription.Text));
+            NewsData data;
+
+            if (currentNewsData != null)
+                data = currentNewsData;
+            else
+                data = new NewsData();
+
+            data.changeData(simpleHTMLEncode(headline.Text), simpleHTMLEncode(shortDesc.Text), simpleHTMLEncode(Type.Text), buttonUrl.Text, simpleHTMLEncode(CreateDescription.Text));
 
             new Task(() =>
             {
@@ -466,17 +501,8 @@ namespace Ålleinfo_Admin
 
                     this.Invoke((MethodInvoker)delegate
                     {
-                        saveExec.Text = "Sparat!";
-
-                        new Task(() =>
-                        {
-                            System.Threading.Thread.Sleep(4000);
-                            Invoke((MethodInvoker)delegate
-                            {
-                                saveExec.Text = "Spara";
-
-                            });
-                        }).Start();
+                        saveExec.Text = "Spara";
+                        ActionButton_Click(action_administrate, null);
                     });
 
                 }
@@ -507,7 +533,7 @@ namespace Ålleinfo_Admin
 
         public void addNews(NewsItem NI)
         {
-            if(InvokeRequired)
+            if (InvokeRequired)
             {
                 Invoke((MethodInvoker)delegate
                 {
@@ -541,7 +567,7 @@ namespace Ålleinfo_Admin
                 });
             }
             else
-            newsPresenter.Controls.Clear();
+                newsPresenter.Controls.Clear();
         }
 
         #endregion

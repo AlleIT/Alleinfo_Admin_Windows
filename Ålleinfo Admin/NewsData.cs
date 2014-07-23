@@ -22,9 +22,16 @@ namespace Ålleinfo_Admin
         public String handler { get; set; }
         public String pubDate { get; set; }
 
-        public NewsData()
+        public void changeData(String headline, String shortDesc, String type, String butUrl, String description)
         {
-            NewsDataArray.newsDataList.Add(this);
+            this.headline = headline;
+            this.shortInfo = shortDesc;
+            this.type = type;
+            this.butURL = butUrl;
+            this.description = description;
+
+            if (String.IsNullOrWhiteSpace(this.pubDate))
+                this.pubDate = DateTime.Now.Day.ToString() + "/" + DateTime.Now.Month.ToString() + " - " + DateTime.Now.Year.ToString();
         }
     }
 }

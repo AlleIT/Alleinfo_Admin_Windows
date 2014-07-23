@@ -72,9 +72,9 @@
             this.label10 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.panel_administrate = new System.Windows.Forms.Panel();
-            this.newsPresenter = new System.Windows.Forms.FlowLayoutPanel();
             this.label14 = new System.Windows.Forms.Label();
             this.noNewsLabel = new System.Windows.Forms.Label();
+            this.newsPresenter = new System.Windows.Forms.FlowLayoutPanel();
             this.AvailibleActions.SuspendLayout();
             this.action_Hem.SuspendLayout();
             this.action_Create.SuspendLayout();
@@ -637,19 +637,8 @@
             this.panel_administrate.ForeColor = System.Drawing.Color.White;
             this.panel_administrate.Location = new System.Drawing.Point(242, 40);
             this.panel_administrate.Name = "panel_administrate";
-            this.panel_administrate.Size = new System.Drawing.Size(558, 510);
+            this.panel_administrate.Size = new System.Drawing.Size(558, 0);
             this.panel_administrate.TabIndex = 15;
-            // 
-            // newsPresenter
-            // 
-            this.newsPresenter.BackColor = System.Drawing.Color.Transparent;
-            this.newsPresenter.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.newsPresenter.Location = new System.Drawing.Point(0, 50);
-            this.newsPresenter.Name = "newsPresenter";
-            this.newsPresenter.Padding = new System.Windows.Forms.Padding(10);
-            this.newsPresenter.Size = new System.Drawing.Size(558, 440);
-            this.newsPresenter.TabIndex = 0;
-            this.newsPresenter.WrapContents = false;
             // 
             // label14
             // 
@@ -670,6 +659,17 @@
             this.noNewsLabel.TabIndex = 0;
             this.noNewsLabel.Text = "Inga nyheter hittades";
             this.noNewsLabel.Visible = false;
+            // 
+            // newsPresenter
+            // 
+            this.newsPresenter.BackColor = System.Drawing.Color.Transparent;
+            this.newsPresenter.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.newsPresenter.Location = new System.Drawing.Point(0, 50);
+            this.newsPresenter.Name = "newsPresenter";
+            this.newsPresenter.Padding = new System.Windows.Forms.Padding(10);
+            this.newsPresenter.Size = new System.Drawing.Size(558, 440);
+            this.newsPresenter.TabIndex = 0;
+            this.newsPresenter.WrapContents = false;
             // 
             // AdminForm
             // 

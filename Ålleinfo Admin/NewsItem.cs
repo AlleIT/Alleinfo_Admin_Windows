@@ -113,6 +113,7 @@ namespace Ålleinfo_Admin
         #region wholeNewsItem
         public void NewsItem_OnClick(Object sender, EventArgs e)
         {
+            AdminForm.adminForm.loadCreateNewsWithData(data);
         }
 
         public void NewsItem_Enter(Object sender, EventArgs e)

@@ -195,7 +195,7 @@ namespace Ålleinfo_Admin
 
         #region Create
 
-        public static Webresponse SetNews(CreateData data)
+        public static Webresponse SetNews(NewsData data)
         {
             Webresponse response;
 
@@ -205,11 +205,11 @@ namespace Ålleinfo_Admin
             reqParams.Add(actionParam, action_setNews);
             reqParams.Add(headlineParam, data.headline);
             reqParams.Add(idParam, data.id.ToString());
-            reqParams.Add(shortDescriptionParam, data.shortDesc);
+            reqParams.Add(shortDescriptionParam, data.shortInfo);
             reqParams.Add(descriptionParam, data.description);
             reqParams.Add(typeParam, data.type);
-            reqParams.Add(buttonUrlParam, data.butUrl);
-            reqParams.Add(dateParam, data.date);
+            reqParams.Add(buttonUrlParam, data.butURL);
+            reqParams.Add(dateParam, data.pubDate);
 
             performDefaultWebRequest(reqParams, out response);
 
@@ -258,7 +258,7 @@ namespace Ålleinfo_Admin
             try
             {
                 NewsDataArray.newsDataList.Clear();
-                new JavaScriptSerializer().Deserialize<List<NewsData>>(response.Message);
+                NewsDataArray.newsDataList = new JavaScriptSerializer().Deserialize<List<NewsData>>(response.Message);
             }
             catch (Exception e)
             {
