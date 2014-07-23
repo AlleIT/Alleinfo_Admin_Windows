@@ -13,7 +13,7 @@ namespace Ålleinfo_Admin
 
     public class NewsData
     {
-        public int? id { get; set; }
+        public int id { get; set; }
         public String headline { get; set; }
         public String shortInfo { get; set; }
         public String description { get; set; }
@@ -24,9 +24,6 @@ namespace Ålleinfo_Admin
 
         public void changeData(String headline, String shortDesc, String type, String butUrl, String description)
         {
-            if (id == null)
-                id = -1;
-
             this.headline = headline;
             this.shortInfo = shortDesc;
             this.type = type;
