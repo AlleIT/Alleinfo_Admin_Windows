@@ -43,6 +43,7 @@
             this.action_error = new System.Windows.Forms.Panel();
             this.label7 = new System.Windows.Forms.Label();
             this.panel_home = new System.Windows.Forms.Panel();
+            this.hexcolor = new System.Windows.Forms.TextBox();
             this.colorBut = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
@@ -75,6 +76,7 @@
             this.label14 = new System.Windows.Forms.Label();
             this.noNewsLabel = new System.Windows.Forms.Label();
             this.newsPresenter = new System.Windows.Forms.FlowLayoutPanel();
+            this.label15 = new System.Windows.Forms.Label();
             this.AvailibleActions.SuspendLayout();
             this.action_Hem.SuspendLayout();
             this.action_Create.SuspendLayout();
@@ -301,6 +303,7 @@
             // panel_home
             // 
             this.panel_home.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(85)))), ((int)(((byte)(102)))));
+            this.panel_home.Controls.Add(this.hexcolor);
             this.panel_home.Controls.Add(this.colorBut);
             this.panel_home.Controls.Add(this.panel1);
             this.panel_home.Controls.Add(this.panel3);
@@ -317,11 +320,24 @@
             this.panel_home.Size = new System.Drawing.Size(558, 0);
             this.panel_home.TabIndex = 11;
             // 
+            // hexcolor
+            // 
+            this.hexcolor.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.hexcolor.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.hexcolor.Location = new System.Drawing.Point(338, 190);
+            this.hexcolor.MaxLength = 7;
+            this.hexcolor.Name = "hexcolor";
+            this.hexcolor.Size = new System.Drawing.Size(90, 31);
+            this.hexcolor.TabIndex = 15;
+            this.hexcolor.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.hexcolor.KeyDown += new System.Windows.Forms.KeyEventHandler(this.hexcolor_KeyDown);
+            this.hexcolor.KeyUp += new System.Windows.Forms.KeyEventHandler(this.hexcolor_KeyUp);
+            // 
             // colorBut
             // 
             this.colorBut.BackColor = System.Drawing.Color.Black;
             this.colorBut.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.colorBut.Location = new System.Drawing.Point(242, 160);
+            this.colorBut.Location = new System.Drawing.Point(242, 124);
             this.colorBut.Name = "colorBut";
             this.colorBut.Size = new System.Drawing.Size(294, 50);
             this.colorBut.TabIndex = 12;
@@ -331,7 +347,7 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.White;
-            this.panel1.Location = new System.Drawing.Point(232, 150);
+            this.panel1.Location = new System.Drawing.Point(232, 114);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(314, 35);
             this.panel1.TabIndex = 13;
@@ -339,7 +355,7 @@
             // panel3
             // 
             this.panel3.BackColor = System.Drawing.Color.Black;
-            this.panel3.Location = new System.Drawing.Point(232, 185);
+            this.panel3.Location = new System.Drawing.Point(232, 149);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(314, 35);
             this.panel3.TabIndex = 14;
@@ -482,6 +498,7 @@
             // 
             // panel_create
             // 
+            this.panel_create.Controls.Add(this.label15);
             this.panel_create.Controls.Add(this.headline);
             this.panel_create.Controls.Add(this.Type);
             this.panel_create.Controls.Add(this.buttonUrl);
@@ -536,7 +553,7 @@
             this.shortDesc.MaxLength = 200;
             this.shortDesc.Multiline = true;
             this.shortDesc.Name = "shortDesc";
-            this.shortDesc.Size = new System.Drawing.Size(221, 108);
+            this.shortDesc.Size = new System.Drawing.Size(221, 125);
             this.shortDesc.TabIndex = 3;
             // 
             // CreateDescription
@@ -671,6 +688,17 @@
             this.newsPresenter.TabIndex = 0;
             this.newsPresenter.WrapContents = false;
             // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label15.ForeColor = System.Drawing.Color.White;
+            this.label15.Location = new System.Drawing.Point(316, 167);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(214, 30);
+            this.label15.TabIndex = 22;
+            this.label15.Text = "Max 3 rader med address till mer info\r\nMax 5 rader utan address.";
+            // 
             // AdminForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -765,5 +793,7 @@
         private System.Windows.Forms.FlowLayoutPanel newsPresenter;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label noNewsLabel;
+        private System.Windows.Forms.TextBox hexcolor;
+        private System.Windows.Forms.Label label15;
     }
 }

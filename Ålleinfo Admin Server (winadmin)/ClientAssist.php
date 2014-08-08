@@ -1,5 +1,5 @@
 <?php
-require_once("../webadmin/core/Classes/Database.php");
+require_once("../webbadmin/core/Classes/Database.php");
 
 Class ClientAssist extends Database {
 
@@ -55,6 +55,8 @@ Class ClientAssist extends Database {
 		}
 
 		$row = $query->fetch(PDO::FETCH_ASSOC);
+		
+		$handler = $row['handler'];
 
 		$path = "/var/www/AlleIT/Alleinfo/utskottsbilder".strrchr($row['logoPath'], "/");
 
@@ -64,8 +66,8 @@ Class ClientAssist extends Database {
 		fwrite($file, base64_decode($image));
 		fclose($file);
 
-		$description = htmlentities($_POST['description']);
-		$socialLink = htmlentities(strip_tags($_POST['socialURL']));
+		$description = $_POST['description'];
+		$socialLink = strip_tags($_POST['socialURL']);
 		$color = htmlentities(strip_tags($_POST['color']));
 
 		$query = $this->_link->prepare("UPDATE `accounts` SET `description` = :description, `socialLink` = :sociallink, `color` = :color WHERE `accounts`.`id` =".$row['id']);
@@ -74,7 +76,12 @@ Class ClientAssist extends Database {
                 $query->bindParam(":color", $color, PDO::PARAM_STR);
                 $query->execute();
 
-                echo self::ACCEPTEDMSG;
+		$query = $this->_link->prepare("UPDATE `elevkaren_news` SET `color` = :color WHERE `handler` = :handler");
+                $query->bindParam(":color", $color, PDO::PARAM_STR);
+				$query->bindParam(":handler", $handler, PDO::PARAM_STR);
+                $query->execute();
+
+        echo self::ACCEPTEDMSG;
 	}
 	
 	public function setNews() {
@@ -94,12 +101,12 @@ Class ClientAssist extends Database {
 		$row = $query->fetch(PDO::FETCH_ASSOC);
 
 		$id = htmlentities(strip_tags($_POST['id']));
-		$headline = htmlentities(strip_tags($_POST['headline']));
-		$shortDesc = htmlentities($_POST['shortDesc']);
-		$butUrl = htmlentities(strip_tags($_POST['butUrl']));
-		$description = htmlentities($_POST['description']);
-		$type = htmlentities(strip_tags($_POST['type']));
-		$date = htmlentities(strip_tags($_POST['pubDate']));
+		$headline = $_POST['headline'];
+		$shortDesc = $_POST['shortDesc'];
+		$butUrl = $_POST['butUrl'];
+		$description = $_POST['description'];
+		$type = $_POST['type'];
+		$date = $_POST['pubDate'];
 				
 		if($id == -1)
 		{

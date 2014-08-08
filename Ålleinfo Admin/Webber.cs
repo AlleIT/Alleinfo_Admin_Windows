@@ -444,19 +444,11 @@ namespace Ålleinfo_Admin
             }
         }
 
-        #region HTML Encoder/Decoder
+        #region HTML/UTF8 Encoder/Decoder
 
-        // HTTPUTILITY fixar inte åäö så att de blir läsbara i textrutan :( Nedan: egen fix
 
-        private static String simpleHTMLEncode(String str)
+        public static String simpleHTMLEncode(String str)
         {
-            str.Replace("å", "&aring;");
-            str.Replace("Å", "&Aring;");
-            str.Replace("ä", "&auml;");
-            str.Replace("Ä", "&Auml;");
-            str.Replace("ö", "&ouml;");
-            str.Replace("Ö", "&Ouml;");
-
             String split = str;
             str = "";
 
@@ -472,10 +464,8 @@ namespace Ålleinfo_Admin
             return str;
         }
 
-        private static String simpleHTMLDecode(String str)
+        public static String simpleHTMLDecode(String str)
         {
-            str = HttpUtility.HtmlDecode(str);
-
             String split = str;
             str = "";
 

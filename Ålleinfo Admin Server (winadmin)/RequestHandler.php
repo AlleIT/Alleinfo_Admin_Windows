@@ -1,5 +1,5 @@
 <?php
-require_once("../webadmin/core/Classes/Database.php");
+require_once("../webbadmin/core/Classes/Database.php");
 require_once("ClientAssist.php");
 
 $clientassist = new ClientAssist();

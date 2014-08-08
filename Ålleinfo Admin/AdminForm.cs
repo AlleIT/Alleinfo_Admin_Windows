@@ -252,8 +252,9 @@ namespace Ålleinfo_Admin
                     {
                         logo.Image = data.logo;
                         socUrlBox.Text = data.socialURL;
-                        descBox.Text = simpleHTMLDecode(data.description);
+                        descBox.Text = Webber.simpleHTMLDecode(data.description);
                         colorBut.BackColor = ColorTranslator.FromHtml(data.hexaColor);
+                        hexcolor.Text = data.hexaColor.ToUpper();
                         loading.Height = 0;
                     });
 
@@ -410,8 +411,7 @@ namespace Ålleinfo_Admin
 
             execHome.Text = "Vänta...";
 
-            HomeData data = new HomeData(logo.Image, simpleHTMLEncode(descBox.Text), socUrlBox.Text, HexConverter(colorBut.BackColor));
-
+            HomeData data = new HomeData(logo.Image, Webber.simpleHTMLEncode(descBox.Text), socUrlBox.Text, HexConverter(colorBut.BackColor));
 
             new Task(() =>
             {
@@ -450,10 +450,68 @@ namespace Ålleinfo_Admin
 
         private void colorBut_Click(object sender, EventArgs e)
         {
+            colorPicker.Color = colorBut.BackColor;
+
             if (colorPicker.ShowDialog() == DialogResult.OK)
             {
                 colorBut.BackColor = colorPicker.Color;
+                hexcolor.Text = HexConverter(colorPicker.Color).ToUpper();
             }
+        }
+
+        private void hexcolor_KeyDown(object sender, KeyEventArgs e)
+        {
+            Keys[] allowedChars = { Keys.D0, Keys.NumPad0, Keys.D1, Keys.NumPad1, Keys.D2, Keys.NumPad2, Keys.D3, Keys.NumPad3, Keys.D4, Keys.NumPad4,
+                                  Keys.D5, Keys.NumPad5, Keys.D6, Keys.NumPad6, Keys.D7, Keys.NumPad7, Keys.D8, Keys.NumPad8, Keys.D9, Keys.NumPad9,
+                                  Keys.A, Keys.B, Keys.C, Keys.D, Keys.E, Keys.F, Keys.Left, Keys.Right, Keys.Back, Keys.Delete };
+
+            Boolean allowed = false;
+
+            foreach (Keys key in allowedChars)
+            {
+                if (e.KeyCode == key)
+                {
+                    allowed = true;
+                    break;
+                }
+            }
+
+            if (!allowed
+                && e.KeyCode != Keys.Control
+                && e.KeyCode != Keys.V)
+            {
+                e.Handled = true;
+                e.SuppressKeyPress = true;
+            }
+        }
+
+        private void hexcolor_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (hexcolor.TextLength == 0)
+            {
+                hexcolor.Text = "#";
+                hexcolor.Select(1, 0);
+            }
+            
+            while (hexcolor.Text.Substring(1).Contains("#"))
+            {
+                if (hexcolor.SelectionStart > hexcolor.Text.IndexOf("#", 1))
+                    hexcolor.Select(hexcolor.SelectionStart - 1, 0);
+
+                hexcolor.Text = hexcolor.Text.Substring(0, hexcolor.Text.IndexOf("#", 1)) + hexcolor.Text.Substring(hexcolor.Text.IndexOf("#", 1) + 1);
+            }
+
+            if (hexcolor.Text.Substring(0, 1) != "#")
+            {
+                hexcolor.Text = "#" + hexcolor.Text;
+                hexcolor.Select(hexcolor.SelectionStart + 1, 0);
+            }
+
+            if (hexcolor.Text.Length > 7)
+                hexcolor.Text = hexcolor.Text.Substring(0, 7);
+
+            if (hexcolor.Text.Length == 7)
+                colorBut.BackColor = ColorTranslator.FromHtml(hexcolor.Text);
         }
 
         #endregion
@@ -491,7 +549,7 @@ namespace Ålleinfo_Admin
             else
                 data = new NewsData();
 
-            data.changeData(simpleHTMLEncode(headline.Text), simpleHTMLEncode(shortDesc.Text), simpleHTMLEncode(Type.Text), buttonUrl.Text, simpleHTMLEncode(CreateDescription.Text));
+            data.changeData(Webber.simpleHTMLEncode(headline.Text), Webber.simpleHTMLEncode(shortDesc.Text), Webber.simpleHTMLEncode(Type.Text), buttonUrl.Text, Webber.simpleHTMLEncode(CreateDescription.Text));
 
             new Task(() =>
             {
@@ -607,56 +665,7 @@ namespace Ålleinfo_Admin
         {
             return "#" + c.R.ToString("X2") + c.G.ToString("X2") + c.B.ToString("X2");
         }
-
-        #region HTML Encoder/Decoder
-
-        // HTTPUTILITY fixar inte åäö så att de blir läsbara i textrutan :( Nedan: egen fix
-
-        private String simpleHTMLEncode(String str)
-        {
-            str.Replace("å", "&aring;");
-            str.Replace("Å", "&Aring;");
-            str.Replace("ä", "&auml;");
-            str.Replace("Ä", "&Auml;");
-            str.Replace("ö", "&ouml;");
-            str.Replace("Ö", "&Ouml;");
-
-            String split = str;
-            str = "";
-
-            String[] divider = { Environment.NewLine };
-
-            foreach (String s in split.Split(divider, StringSplitOptions.None))
-            {
-                str += s + "<br>";
-            }
-
-            str = str.Substring(0, str.Length - 4);
-
-            return str;
-        }
-
-        private String simpleHTMLDecode(String str)
-        {
-            str = HttpUtility.HtmlDecode(str);
-
-            String split = str;
-            str = "";
-
-            String[] divider = { "<br>" };
-
-            foreach (String s in split.Split(divider, StringSplitOptions.None))
-            {
-                str += s + Environment.NewLine;
-            }
-
-            str = str.Substring(0, str.Length - Environment.NewLine.Length);
-
-            return str;
-        }
-
-        #endregion
-
+        
         #endregion
 
         #region Generic texbox behaviours
@@ -675,6 +684,7 @@ namespace Ålleinfo_Admin
         }
 
         #endregion
+
 
     }
 }
