@@ -110,25 +110,27 @@ Class ClientAssist extends Database {
 				
 		if($id == -1)
 		{
-			$query = $this->_link->prepare("INSERT INTO `elevkaren_news` (`headline`, `shortInfo`, `description`, `butURL`, `type`, `handler`, `pubDate`) VALUES (:headline, :shortDesc, :description, :butUrl, :type, :handler, :date);");
+			$query = $this->_link->prepare("INSERT INTO `elevkaren_news` (`headline`, `shortInfo`, `description`, `butURL`, `type`, `handler`, `color`, `pubDate`) VALUES (:headline, :shortDesc, :description, :butUrl, :type, :handler, :color, :date);");
             $query->bindParam(":headline", $headline, PDO::PARAM_STR);
             $query->bindParam(":shortDesc", $shortDesc, PDO::PARAM_STR);
             $query->bindParam(":description", $description, PDO::PARAM_STR);
             $query->bindParam(":butUrl", $butUrl, PDO::PARAM_STR);
             $query->bindParam(":type", $type, PDO::PARAM_STR);
             $query->bindParam(":handler", $row['handler'], PDO::PARAM_STR);
+            $query->bindParam(":color", $row['color'], PDO::PARAM_STR);
             $query->bindParam(":date", $date, PDO::PARAM_STR);
             $query->execute();
 
             echo self::ACCEPTEDMSG;
 		} else {
-			$query = $this->_link->prepare("UPDATE `elevkaren_news` SET  `headline` =  :headline, `shortInfo` =  :shortDesc, `description` =  :description, `butURL` =  :butUrl, `type` =  :type, `handler` =  :handler WHERE  `elevkaren_news`.`id` = :id;");
+			$query = $this->_link->prepare("UPDATE `elevkaren_news` SET  `headline` =  :headline, `shortInfo` =  :shortDesc, `description` =  :description, `butURL` =  :butUrl, `type` =  :type, `handler` =  :handler, `color` = :color WHERE  `elevkaren_news`.`id` = :id;");
             $query->bindParam(":headline", $headline, PDO::PARAM_STR);
             $query->bindParam(":shortDesc", $shortDesc, PDO::PARAM_STR);
             $query->bindParam(":description", $description, PDO::PARAM_STR);
             $query->bindParam(":butUrl", $butUrl, PDO::PARAM_STR);
             $query->bindParam(":type", $type, PDO::PARAM_STR);
             $query->bindParam(":handler", $row['handler'], PDO::PARAM_STR);
+            $query->bindParam(":color", $row['color'], PDO::PARAM_STR);
             $query->bindParam(":id", $id, PDO::PARAM_STR);
             $query->execute();
 			

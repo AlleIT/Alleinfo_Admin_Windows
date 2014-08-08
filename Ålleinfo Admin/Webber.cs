@@ -259,6 +259,9 @@ namespace Ålleinfo_Admin
             {
                 NewsDataArray.newsDataList.Clear();
                 NewsDataArray.newsDataList = new JavaScriptSerializer().Deserialize<List<NewsData>>(response.Message);
+
+                if (NewsDataArray.newsDataList == null)
+                    NewsDataArray.newsDataList = new List<NewsData>();
             }
             catch (Exception e)
             {
