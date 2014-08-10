@@ -6,9 +6,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Net;
 using System.Text;
-using System.Web;
 using System.Web.Script.Serialization;
-using System.Windows.Forms;
 
 namespace Ålleinfo_Admin
 {
@@ -229,7 +227,7 @@ namespace Ålleinfo_Admin
         #endregion
 
         #region adminAll
-        public static void GetAllNews()
+        public static void GetAllNews(SizeF scale)
         {
             if (requestNewsCount() == 0)
                 return;
@@ -281,7 +279,7 @@ namespace Ålleinfo_Admin
             {
                 foreach (NewsData ND in NewsDataArray.newsDataList)
                 {
-                    new NewsItem(ND);
+                    new NewsItem(ND, scale);
                 }
             }
             else

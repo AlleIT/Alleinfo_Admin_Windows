@@ -11,6 +11,8 @@ namespace Ålleinfo_Admin
 {
     public partial class AdminForm : Form
     {
+        private SizeF currentScaleFactor = new SizeF(1f, 1f);
+
         public static AdminForm adminForm;
 
         public static Queue<String> errorMessages = new Queue<String>();
@@ -28,7 +30,7 @@ namespace Ålleinfo_Admin
         }
 
         public AdminForm()
-        {
+        {            
             InitializeComponent();
             usermessage.Text = "Välkomna, " + Webber.Username;
             ActionButton_Click(action_Hem, null);
@@ -37,6 +39,14 @@ namespace Ålleinfo_Admin
             newsPresenter.AutoScroll = true;
 
             adminForm = this;
+        }
+
+        protected override void ScaleControl(SizeF factor, BoundsSpecified specified)
+        {
+            base.ScaleControl(factor, specified);
+
+            currentScaleFactor = new SizeF(currentScaleFactor.Width * factor.Width + .25f,
+            currentScaleFactor.Height * factor.Height + .1875f);
         }
 
         #region defaults
@@ -163,7 +173,7 @@ namespace Ålleinfo_Admin
                         {
                             ErrorReport.Height = 0;
                             action_error.Visible = false;
-                            panel_home.Height = 510;
+                            panel_home.Height = (int)(510 * currentScaleFactor.Height);
                             return;
                         }
                         else
@@ -208,7 +218,7 @@ namespace Ålleinfo_Admin
                     currentPage = actionPage.Home;
 
                     loadHome();
-                    panel_home.Height = 510;
+                    panel_home.Height = (int)(510 * currentScaleFactor.Height);
                     break;
 
                 case "action_Create":
@@ -217,7 +227,7 @@ namespace Ålleinfo_Admin
                     currentPage = actionPage.Create;
 
                     loadCreateNews();
-                    panel_create.Height = 510;
+                    panel_create.Height = (int)(510 * currentScaleFactor.Height);
                     break;
 
                 case "action_administrate":
@@ -226,7 +236,7 @@ namespace Ålleinfo_Admin
                     currentPage = actionPage.Administrate;
 
                     loadAllNews();
-                    panel_administrate.Height = 510;
+                    panel_administrate.Height = (int)(510 * currentScaleFactor.Height);
                     newsPresenter.Focus();
                     break;
 
@@ -240,7 +250,7 @@ namespace Ålleinfo_Admin
 
         private void loadHome()
         {
-            loading.Height = 510;
+            loading.Height = (int)(510 * currentScaleFactor.Height);
 
             new Task(() =>
             {
@@ -309,12 +319,12 @@ namespace Ålleinfo_Admin
 
             setButtonFocus(action_Create);
 
-            panel_create.Height = 510;
+            panel_create.Height = (int)(510 * currentScaleFactor.Height);
         }
 
         private void loadAllNews()
         {
-            loading.Height = 510;
+            loading.Height = (int)(510 * currentScaleFactor.Height);
             clearNews();
             noNewsLabel.Visible = false;
 
@@ -322,7 +332,7 @@ namespace Ålleinfo_Admin
             {
                 try
                 {
-                    Webber.GetAllNews();
+                    Webber.GetAllNews(currentScaleFactor);
 
                     this.Invoke((MethodInvoker)delegate
                     {
@@ -348,7 +358,7 @@ namespace Ålleinfo_Admin
 
         private void loadEditNews()
         {
-            loading.Height = 510;
+            loading.Height = (int)(510 * currentScaleFactor.Height);
 
             new Task(() =>
             {
@@ -649,7 +659,7 @@ namespace Ålleinfo_Admin
 
             action_error.Visible = true;
 
-            ErrorReport.Height = 510;
+            ErrorReport.Height = (int)(510 * currentScaleFactor.Height);
 
             ReportText.Text = AdminForm.errorMessages.Dequeue();
 

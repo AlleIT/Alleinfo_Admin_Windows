@@ -9,6 +9,8 @@ namespace Ålleinfo_Admin
 {
     public partial class LoginForm : Form
     {
+        private SizeF currentScaleFactor = new SizeF(1f, 1f);
+
         #region mouseMoveSettings
 
         public const int WM_NCLBUTTONDOWN = 0xA1;
@@ -32,6 +34,14 @@ namespace Ålleinfo_Admin
         public LoginForm()
         {
             InitializeComponent();
+        }
+
+        protected override void ScaleControl(SizeF factor, BoundsSpecified specified)
+        {
+            base.ScaleControl(factor, specified);
+
+            currentScaleFactor = new SizeF(currentScaleFactor.Width * factor.Width + .25f,
+            currentScaleFactor.Height * factor.Height + .1875f);
         }
 
         #region button_exit

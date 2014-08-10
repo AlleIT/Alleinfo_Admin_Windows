@@ -14,13 +14,13 @@ namespace Ålleinfo_Admin
 
         public Panel container;
 
-        public NewsItem(NewsData ND)
+        public NewsItem(NewsData ND, SizeF scale)
         {
             this.data = ND;
 
             #region Panel container
             container = new Panel();
-            container.Size = new Size(518, 100);
+            container.Size = new Size((int)(518 * scale.Width), (int)(100 * scale.Height));
             container.Margin = new Padding(10);
             container.Left = 0;
             container.BackColor = Color.FromArgb(54, 54, 54);
@@ -72,7 +72,7 @@ namespace Ålleinfo_Admin
             pubDate.Font = new Font("Calibri", 16, FontStyle.Italic);
             pubDate.Text = "Publicerades den " + data.pubDate;
             pubDate.Top = container.Height - pubDate.Height - 5;
-            pubDate.Left = 230;
+            pubDate.Left = (int)(230 * scale.Width);
             pubDate.Cursor = Cursors.Hand;
             pubDate.ForeColor = Color.White;
             pubDate.BackColor = Color.Transparent;
@@ -90,7 +90,7 @@ namespace Ålleinfo_Admin
             remBut.Text = "Radera";
             remBut.Padding = new Padding(10);
             remBut.Top = container.Height / 4 - remBut.Height / 2;
-            remBut.Left = 400;
+            remBut.Left = (int)(400 * scale.Width);
             remBut.Cursor = Cursors.Hand;
             remBut.ForeColor = Color.White;
             remBut.BackColor = Color.FromArgb(0, 85, 102);
