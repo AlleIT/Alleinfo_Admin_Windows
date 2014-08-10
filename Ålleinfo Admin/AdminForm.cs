@@ -32,7 +32,7 @@ namespace Ålleinfo_Admin
         public AdminForm()
         {            
             InitializeComponent();
-            usermessage.Text = "Välkomna, " + Webber.Username;
+            usermessage.Text = "Välkomna, " + HttpUtility.HtmlDecode(Webber.Name);
             ActionButton_Click(action_Hem, null);
 
             newsPresenter.VerticalScroll.Maximum = 0;
@@ -45,8 +45,8 @@ namespace Ålleinfo_Admin
         {
             base.ScaleControl(factor, specified);
 
-            currentScaleFactor = new SizeF(currentScaleFactor.Width * factor.Width + .25f,
-            currentScaleFactor.Height * factor.Height + .1875f);
+            currentScaleFactor = new SizeF(currentScaleFactor.Width * factor.Width,
+            currentScaleFactor.Height * factor.Height);
         }
 
         #region defaults
@@ -694,7 +694,5 @@ namespace Ålleinfo_Admin
         }
 
         #endregion
-
-
     }
 }

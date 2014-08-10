@@ -16,7 +16,14 @@ Class ClientAssist extends Database {
        	$query->execute();
 		
        	if ($query->rowCount() == 1){
-			echo self::ACCEPTEDMSG;
+			$query = $this->_link->prepare("SELECT handler FROM accounts WHERE username = :username AND password = :password");
+			$query->bindParam(":username", $username, PDO::PARAM_STR);
+			$query->bindParam(":password", $password, PDO::PARAM_STR);
+			$query->execute();
+			
+			$row = $query->fetch(PDO::FETCH_ASSOC);
+		
+			echo self::ACCEPTEDMSG . $row['handler'];
         } else {
            	echo "Inloggningen misslyckades.";
         }
@@ -27,14 +34,14 @@ Class ClientAssist extends Database {
         $password = htmlentities(hash("SHA512", $_POST['password']));
 		
        	// check if user exist
-       	$query = $this->_link->prepare("SELECT * FROM accounts WHERE username = :username AND password = :password");
+       	$query = $this->_link->prepare("SELECT logoPath, description, socialLink, color FROM accounts WHERE username = :username AND password = :password");
        	$query->bindParam(":username", $username, PDO::PARAM_STR);
        	$query->bindParam(":password", $password, PDO::PARAM_STR);
        	$query->execute();
 		
        	if ($query->rowCount() == 1){
 			$row = $query->fetch(PDO::FETCH_ASSOC);
-            echo self::ACCEPTEDMSG . $row['logoPath'] . "," . $row['description'] . "," . $row['socialLink'] . $row['color'];
+            echo self::ACCEPTEDMSG . json_encode($row);
         } else {
             echo "Felaktiga användaruppgifter.";
         }

@@ -6,6 +6,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Net;
 using System.Text;
+using Newtonsoft.Json;
 using System.Web.Script.Serialization;
 
 namespace Ålleinfo_Admin
@@ -62,6 +63,8 @@ namespace Ålleinfo_Admin
 
         #region Creds
 
+        public static String Name;
+
         public static String Username;
         private static String Password;
 
@@ -76,29 +79,13 @@ namespace Ålleinfo_Admin
             reqParams.Add(passParam, password);
             reqParams.Add(actionParam, action_testCredentials);
 
-            using (WebClient WC = new WebClient())
-            {
-                try
-                {
-                    response.Message = Encoding.UTF8.GetString(WC.UploadValues(URI, reqParams));
-
-                    if (String.IsNullOrWhiteSpace(response.Message))
-                    {
-                        response.Message = Error_NoResponse;
-                    }
-
-                    response.Successful = response.Message.Equals(acceptedMessage, StringComparison.OrdinalIgnoreCase);
-                }
-                catch (Exception e)
-                {
-                    response = new Webresponse(false, e.Message);
-                }
-            }
-
+            performDefaultWebRequest(reqParams, out response);
+            
             if (response.Successful)
             {
                 Username = username;
                 Password = password;
+                Name = response.Message;
             }
 
             return response;
@@ -123,15 +110,16 @@ namespace Ålleinfo_Admin
             {
                 try
                 {
-                    HttpWebRequest httpWebRequest = (HttpWebRequest)HttpWebRequest.Create(response.Message.Substring(0, response.Message.IndexOf(",")));
+                    dynamic jsonData = JsonConvert.DeserializeObject(response.Message);
+                    HttpWebRequest httpWebRequest = (HttpWebRequest)HttpWebRequest.Create((String)jsonData.logoPath);
                     HttpWebResponse httpWebReponse = (HttpWebResponse)httpWebRequest.GetResponse();
                     Stream stream = httpWebReponse.GetResponseStream();
 
-                    String description = response.Message.LastIndexOf(",") == response.Message.IndexOf(",") + 1 ? "" : response.Message.Substring(response.Message.IndexOf(",") + 1, response.Message.LastIndexOf(",") - response.Message.IndexOf(",") - 1);
-                    
-                    String socURL = response.Message.LastIndexOf(",") + 1 >= response.Message.Length ? "" : response.Message.Substring(response.Message.LastIndexOf(",") + 1, response.Message.Length - response.Message.LastIndexOf(",") - 8);
-                    
-                    String hexColor = response.Message.Substring(response.Message.Length - 7);
+                    String description = (String)jsonData.description;
+
+                    String socURL = (String)jsonData.socialLink;
+
+                    String hexColor = (String)jsonData.color;
 
                     return new HomeData(Image.FromStream(stream), description, socURL, hexColor);
                 }

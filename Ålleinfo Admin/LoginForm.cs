@@ -40,8 +40,8 @@ namespace Ålleinfo_Admin
         {
             base.ScaleControl(factor, specified);
 
-            currentScaleFactor = new SizeF(currentScaleFactor.Width * factor.Width + .25f,
-            currentScaleFactor.Height * factor.Height + .1875f);
+            currentScaleFactor = new SizeF(currentScaleFactor.Width * factor.Width,
+            currentScaleFactor.Height * factor.Height);
         }
 
         #region button_exit
