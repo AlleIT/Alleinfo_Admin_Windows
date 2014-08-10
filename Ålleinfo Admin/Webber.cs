@@ -246,8 +246,8 @@ namespace Ålleinfo_Admin
 
             try
             {
-				NewsDataArray.newsDataList.Clear();
-				NewsDataArray.newsDataList = (List<NewsData>)JsonConvert.DeserializeObject(response.Message);
+                NewsDataArray.newsDataList.Clear();
+                NewsDataArray.newsDataList = JsonConvert.DeserializeObject<List<NewsData>>(response.Message);
 
                 if (NewsDataArray.newsDataList == null)
                     NewsDataArray.newsDataList = new List<NewsData>();
