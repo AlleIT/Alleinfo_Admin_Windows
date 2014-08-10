@@ -7,7 +7,6 @@ using System.IO;
 using System.Net;
 using System.Text;
 using Newtonsoft.Json;
-using System.Web.Script.Serialization;
 
 namespace Ålleinfo_Admin
 {
@@ -115,13 +114,15 @@ namespace Ålleinfo_Admin
                     HttpWebResponse httpWebReponse = (HttpWebResponse)httpWebRequest.GetResponse();
                     Stream stream = httpWebReponse.GetResponseStream();
 
-                    String description = (String)jsonData.description;
+                    data.logo = Image.FromStream(stream);
 
-                    String socURL = (String)jsonData.socialLink;
+                    data.description = (String)jsonData.description;
 
-                    String hexColor = (String)jsonData.color;
+                    data.socialURL = (String)jsonData.socialLink;
 
-                    return new HomeData(Image.FromStream(stream), description, socURL, hexColor);
+                    data.hexaColor = (String)jsonData.color;
+
+                    return data;
                 }
                 catch (Exception e)
                 {
@@ -244,7 +245,7 @@ namespace Ålleinfo_Admin
             try
             {
                 NewsDataArray.newsDataList.Clear();
-                NewsDataArray.newsDataList = new JavaScriptSerializer().Deserialize<List<NewsData>>(response.Message);
+                NewsDataArray.newsDataList = JsonConvert.DeserializeObject<List<NewsData>>(response.Message);
 
                 if (NewsDataArray.newsDataList == null)
                     NewsDataArray.newsDataList = new List<NewsData>();
@@ -334,59 +335,7 @@ namespace Ålleinfo_Admin
             }
 
         }
-
-        // TODO: Rewrite. Just a copy of GetHome as of now.
-        public static HomeData GetSpecificNews()
-        {
-            HomeData data = new HomeData();
-
-            Webresponse response = new Webresponse();
-
-            NameValueCollection reqParams = new NameValueCollection();
-            reqParams.Add(userParam, Username);
-            reqParams.Add(passParam, Password);
-            reqParams.Add(actionParam, action_getHome);
-
-            if (response.Successful)
-            {
-                try
-                {
-                    HttpWebRequest httpWebRequest = (HttpWebRequest)HttpWebRequest.Create(response.Message.Substring(0, response.Message.IndexOf(",")));
-                    HttpWebResponse httpWebReponse = (HttpWebResponse)httpWebRequest.GetResponse();
-                    Stream stream = httpWebReponse.GetResponseStream();
-
-                    String description = response.Message.LastIndexOf(",") == response.Message.IndexOf(",") + 1 ? "" : response.Message.Substring(response.Message.IndexOf(",") + 1, response.Message.LastIndexOf(",") - response.Message.IndexOf(",") - 1);
-                    String socURL = response.Message.LastIndexOf(",") + 1 >= response.Message.Length ? "" : response.Message.Substring(response.Message.LastIndexOf(",") + 1, response.Message.Length - response.Message.LastIndexOf(",") - 8);
-                    String hexColor = response.Message.Substring(response.Message.Length - 7);
-
-                    return new HomeData(Image.FromStream(stream), description, socURL, hexColor);
-                }
-                catch (Exception e)
-                {
-                    AdminForm.errorMessages.Enqueue("Sidan kunde inte laddas!"
-                        + Environment.NewLine + Environment.NewLine
-                        + "Felmeddelande:" + Environment.NewLine
-                        + e.Message.ToString()
-                        + Environment.NewLine + Environment.NewLine
-                        + "Ytterligare info:"
-                        + Environment.NewLine
-                        + e.StackTrace.ToString());
-
-                    throw new GeneralWebberException();
-                }
-            }
-            else
-            {
-                AdminForm.errorMessages.Enqueue("Sidan kunde inte laddas!"
-                    + Environment.NewLine + Environment.NewLine
-                    + "Felmeddelande:" + Environment.NewLine
-                    + response.Message);
-
-                throw new GeneralWebberException();
-            }
-
-        }
-
+        
         #endregion
 
         public static void performDefaultWebRequest(NameValueCollection reqParams, out Webresponse response)

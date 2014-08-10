@@ -427,7 +427,7 @@ namespace Ålleinfo_Admin
             {
                 try
                 {
-                    Webresponse response = Webber.SetHome(data);
+                    Webber.SetHome(data);
 
                     this.Invoke((MethodInvoker)delegate
                     {
@@ -565,7 +565,7 @@ namespace Ålleinfo_Admin
             {
                 try
                 {
-                    Webresponse response = Webber.SetNews(data);
+                    Webber.SetNews(data);
 
                     this.Invoke((MethodInvoker)delegate
                     {
