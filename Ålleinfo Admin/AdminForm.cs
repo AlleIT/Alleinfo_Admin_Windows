@@ -49,69 +49,6 @@ namespace Ålleinfo_Admin
             currentScaleFactor.Height * factor.Height);
         }
 
-        #region defaults
-
-        #region button_exit
-
-        private void exit_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
-        private void exit_Enter(object sender, EventArgs e)
-        {
-            exit.BackColor = Color.Red;
-        }
-
-        private void exit_Leave(object sender, EventArgs e)
-        {
-            exit.BackColor = Color.IndianRed;
-        }
-
-        #endregion
-
-        #region button_Mini
-
-        private void Minimize_Click(object sender, EventArgs e)
-        {
-            this.WindowState = FormWindowState.Minimized;
-        }
-
-        private void BlueButton_Enter(object sender, EventArgs e)
-        {
-            Control c = (Control)sender;
-            c.BackColor = Color.FromArgb(0, 95, 112);
-        }
-
-        private void BlueButton_Leave(object sender, EventArgs e)
-        {
-            Control c = (Control)sender;
-            c.BackColor = Color.FromArgb(0, 125, 142);
-        }
-        #endregion
-
-        #region mouseMoveSettings
-
-        public const int WM_NCLBUTTONDOWN = 0xA1;
-        public const int HTCAPTION = 0x2;
-        [DllImport("User32.dll")]
-        public static extern bool ReleaseCapture();
-        [DllImport("User32.dll")]
-        public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
-
-        private void AdminForm_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                ReleaseCapture();
-                SendMessage(Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0);
-            }
-        }
-
-        #endregion
-
-        #endregion
-
         #region Loading of pages
 
         #region actionbutton
@@ -252,7 +189,7 @@ namespace Ålleinfo_Admin
         {
             loading.Height = (int)(510 * currentScaleFactor.Height);
 
-            new Task(() =>
+           new Task(() =>
             {
                 try
                 {
@@ -427,7 +364,7 @@ namespace Ålleinfo_Admin
             {
                 try
                 {
-                    Webresponse response = Webber.SetHome(data);
+                    Webber.SetHome(data);
 
                     this.Invoke((MethodInvoker)delegate
                     {
@@ -565,7 +502,7 @@ namespace Ålleinfo_Admin
             {
                 try
                 {
-                    Webresponse response = Webber.SetNews(data);
+                    Webber.SetNews(data);
 
                     this.Invoke((MethodInvoker)delegate
                     {

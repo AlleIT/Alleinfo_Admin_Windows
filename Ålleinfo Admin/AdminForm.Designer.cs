@@ -29,8 +29,6 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AdminForm));
-            this.exit = new System.Windows.Forms.Label();
-            this.Minimize = new System.Windows.Forms.Label();
             this.usermessage = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.AvailibleActions = new System.Windows.Forms.FlowLayoutPanel();
@@ -92,49 +90,6 @@
             this.panel_administrate.SuspendLayout();
             this.SuspendLayout();
             // 
-            // exit
-            // 
-            this.exit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.exit.AutoSize = true;
-            this.exit.BackColor = System.Drawing.Color.IndianRed;
-            this.exit.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.exit.Font = new System.Drawing.Font("Calibri", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.exit.ForeColor = System.Drawing.Color.White;
-            this.exit.Location = new System.Drawing.Point(746, 0);
-            this.exit.Name = "exit";
-            this.exit.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
-            this.exit.Size = new System.Drawing.Size(54, 39);
-            this.exit.TabIndex = 4;
-            this.exit.Text = "X";
-            this.exit.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.exit.Click += new System.EventHandler(this.exit_Click);
-            this.exit.Enter += new System.EventHandler(this.exit_Enter);
-            this.exit.Leave += new System.EventHandler(this.exit_Leave);
-            this.exit.MouseEnter += new System.EventHandler(this.exit_Enter);
-            this.exit.MouseLeave += new System.EventHandler(this.exit_Leave);
-            // 
-            // Minimize
-            // 
-            this.Minimize.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.Minimize.AutoSize = true;
-            this.Minimize.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(125)))), ((int)(((byte)(142)))));
-            this.Minimize.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.Minimize.Font = new System.Drawing.Font("Calibri", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Minimize.ForeColor = System.Drawing.Color.White;
-            this.Minimize.Location = new System.Drawing.Point(693, 0);
-            this.Minimize.Margin = new System.Windows.Forms.Padding(3, 0, 0, 0);
-            this.Minimize.Name = "Minimize";
-            this.Minimize.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
-            this.Minimize.Size = new System.Drawing.Size(53, 39);
-            this.Minimize.TabIndex = 6;
-            this.Minimize.Text = "_";
-            this.Minimize.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.Minimize.Click += new System.EventHandler(this.Minimize_Click);
-            this.Minimize.Enter += new System.EventHandler(this.BlueButton_Enter);
-            this.Minimize.Leave += new System.EventHandler(this.BlueButton_Leave);
-            this.Minimize.MouseEnter += new System.EventHandler(this.BlueButton_Enter);
-            this.Minimize.MouseLeave += new System.EventHandler(this.BlueButton_Leave);
-            // 
             // usermessage
             // 
             this.usermessage.AutoSize = true;
@@ -145,7 +100,6 @@
             this.usermessage.Size = new System.Drawing.Size(347, 33);
             this.usermessage.TabIndex = 7;
             this.usermessage.Text = "Ålleinfos Administrationspanel";
-            this.usermessage.MouseDown += new System.Windows.Forms.MouseEventHandler(this.AdminForm_MouseDown);
             // 
             // panel2
             // 
@@ -156,7 +110,6 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(2, 510);
             this.panel2.TabIndex = 9;
-            this.panel2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.AdminForm_MouseDown);
             // 
             // AvailibleActions
             // 
@@ -729,14 +682,12 @@
             this.Controls.Add(this.AvailibleActions);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.usermessage);
-            this.Controls.Add(this.Minimize);
-            this.Controls.Add(this.exit);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MaximizeBox = false;
+			this.MaximizeBox = false;
+			this.MinimizeBox = true;
             this.Name = "AdminForm";
             this.Text = "Ålleinfo - Administrationspanelen";
-            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.AdminForm_MouseDown);
             this.AvailibleActions.ResumeLayout(false);
             this.action_Hem.ResumeLayout(false);
             this.action_Hem.PerformLayout();
@@ -765,8 +716,6 @@
 
         #endregion
 
-        private System.Windows.Forms.Label exit;
-        private System.Windows.Forms.Label Minimize;
         private System.Windows.Forms.Label usermessage;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.FlowLayoutPanel AvailibleActions;

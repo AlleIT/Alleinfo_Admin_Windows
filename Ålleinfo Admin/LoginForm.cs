@@ -11,29 +11,11 @@ namespace Ålleinfo_Admin
     {
         private SizeF currentScaleFactor = new SizeF(1f, 1f);
 
-        #region mouseMoveSettings
-
-        public const int WM_NCLBUTTONDOWN = 0xA1;
-        public const int HTCAPTION = 0x2;
-        [DllImport("User32.dll")]
-        public static extern bool ReleaseCapture();
-        [DllImport("User32.dll")]
-        public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
-
-        private void LoginForm_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                ReleaseCapture();
-                SendMessage(Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0);
-            }
-        }
-
-        #endregion
-
         public LoginForm()
         {
             InitializeComponent();
+
+			loadingCircle.Visible = false;
         }
 
         protected override void ScaleControl(SizeF factor, BoundsSpecified specified)
@@ -43,25 +25,6 @@ namespace Ålleinfo_Admin
             currentScaleFactor = new SizeF(currentScaleFactor.Width * factor.Width,
             currentScaleFactor.Height * factor.Height);
         }
-
-        #region button_exit
-
-        private void exit_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
-        private void exit_Enter(object sender, EventArgs e)
-        {
-            exit.BackColor = Color.Red;
-        }
-
-        private void exit_Leave(object sender, EventArgs e)
-        {
-            exit.BackColor = Color.IndianRed;
-        }
-
-        #endregion
 
         #region button_login
 
@@ -96,7 +59,9 @@ namespace Ålleinfo_Admin
 
             loginStuff.Height = 0;
 
-            loadingCircle.Height = 140;
+            loadingCircle.Height = (int)(140 * currentScaleFactor.Height);
+
+			loadingCircle.Visible = true;
 
             new Task(() =>
                 {

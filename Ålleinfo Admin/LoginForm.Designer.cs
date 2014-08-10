@@ -32,7 +32,6 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.UsernameBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.exit = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.PasswordBox = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -53,7 +52,6 @@
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
-            this.pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.LoginForm_MouseDown);
             // 
             // UsernameBox
             // 
@@ -77,25 +75,6 @@
             this.label1.Size = new System.Drawing.Size(148, 26);
             this.label1.TabIndex = 2;
             this.label1.Text = "Användarnamn:";
-            // 
-            // exit
-            // 
-            this.exit.AutoSize = true;
-            this.exit.BackColor = System.Drawing.Color.IndianRed;
-            this.exit.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.exit.Font = new System.Drawing.Font("Calibri", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.exit.ForeColor = System.Drawing.Color.White;
-            this.exit.Location = new System.Drawing.Point(230, 0);
-            this.exit.Name = "exit";
-            this.exit.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
-            this.exit.Size = new System.Drawing.Size(54, 39);
-            this.exit.TabIndex = 3;
-            this.exit.Text = "X";
-            this.exit.Click += new System.EventHandler(this.exit_Click);
-            this.exit.Enter += new System.EventHandler(this.exit_Enter);
-            this.exit.Leave += new System.EventHandler(this.exit_Leave);
-            this.exit.MouseEnter += new System.EventHandler(this.exit_Enter);
-            this.exit.MouseLeave += new System.EventHandler(this.exit_Leave);
             // 
             // label2
             // 
@@ -131,7 +110,6 @@
             this.label3.Size = new System.Drawing.Size(175, 33);
             this.label3.TabIndex = 6;
             this.label3.Text = "Ålleinfo Admin";
-            this.label3.MouseDown += new System.Windows.Forms.MouseEventHandler(this.LoginForm_MouseDown);
             // 
             // login
             // 
@@ -181,19 +159,17 @@
             this.ClientSize = new System.Drawing.Size(284, 411);
             this.Controls.Add(this.login);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.exit);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.loadingCircle);
             this.Controls.Add(this.loginStuff);
             this.DoubleBuffered = true;
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.MinimizeBox = false;
+            this.MinimizeBox = true;
             this.Name = "LoginForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Ålleinfo - Logga in";
-            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.LoginForm_MouseDown);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.loginStuff.ResumeLayout(false);
             this.loginStuff.PerformLayout();
@@ -208,7 +184,6 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.TextBox UsernameBox;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label exit;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox PasswordBox;
         private System.Windows.Forms.Label label3;
