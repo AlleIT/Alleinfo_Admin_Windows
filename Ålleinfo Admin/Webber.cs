@@ -94,8 +94,6 @@ namespace Ålleinfo_Admin
 
         public static HomeData GetHome()
         {
-			System.Diagnostics.Debug.WriteLine ("called");
-
             HomeData data = new HomeData();
 
             Webresponse response;

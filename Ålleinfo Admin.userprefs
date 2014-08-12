@@ -1,0 +1,30 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Ålleinfo Admin/AdminForm.Designer.cs">
+    <Files>
+      <File FileName="Ålleinfo Admin/LoginForm.Designer.cs" Line="151" Column="45" />
+      <File FileName="Ålleinfo Admin/AdminForm.Designer.cs" Line="671" Column="25" />
+      <File FileName="Ålleinfo Admin/LoginForm.cs" Line="1" Column="1" />
+      <File FileName="Ålleinfo Admin/AdminForm.cs" Line="1" Column="1" />
+      <File FileName="Ålleinfo Admin/Program.cs" Line="1" Column="1" />
+      <File FileName="Ålleinfo Admin/NewsItem.cs" Line="1" Column="1" />
+      <File FileName="Ålleinfo Admin/Webber.cs" Line="114" Column="41" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State expanded="True">
+          <Node name="Ålleinfo Admin" expanded="True">
+            <Node name="AdminForm.cs" expanded="True" />
+            <Node name="LoginForm.cs" expanded="True" />
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore>
+      <Breakpoint file="/home/felix/alleinfo_admin/Ålleinfo Admin/Webber.cs" line="127" column="1" />
+    </BreakpointStore>
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

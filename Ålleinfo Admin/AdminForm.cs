@@ -32,7 +32,7 @@ namespace Ålleinfo_Admin
         public AdminForm()
         {            
             InitializeComponent();
-            usermessage.Text = "Välkomna, " + HttpUtility.HtmlDecode(Webber.Name);
+			usermessage.Text = "Välkomna, " + HttpUtility.HtmlDecode(Webber.Name);
             ActionButton_Click(action_Hem, null);
 
             newsPresenter.VerticalScroll.Maximum = 0;
@@ -193,13 +193,13 @@ namespace Ålleinfo_Admin
             {
                 try
                 {
-                    HomeData data = Webber.GetHome();
+					HomeData data = Webber.GetHome();
 
                     this.Invoke((MethodInvoker)delegate
                     {
                         logo.Image = data.logo;
                         socUrlBox.Text = data.socialURL;
-                        descBox.Text = Webber.simpleHTMLDecode(data.description);
+						descBox.Text = Webber.simpleHTMLDecode(data.description);
                         colorBut.BackColor = ColorTranslator.FromHtml(data.hexaColor);
                         hexcolor.Text = data.hexaColor.ToUpper();
                         loading.Height = 0;
@@ -207,7 +207,7 @@ namespace Ålleinfo_Admin
 
                 }
                 catch (GeneralWebberException)
-                {
+				{
                     this.Invoke((MethodInvoker)delegate
                     {
                         loading.Height = 0;
@@ -269,7 +269,7 @@ namespace Ålleinfo_Admin
             {
                 try
                 {
-                    Webber.GetAllNews(currentScaleFactor);
+					Webber.GetAllNews(currentScaleFactor);
 
                     this.Invoke((MethodInvoker)delegate
                     {
@@ -358,13 +358,13 @@ namespace Ålleinfo_Admin
 
             execHome.Text = "Vänta...";
 
-            HomeData data = new HomeData(logo.Image, Webber.simpleHTMLEncode(descBox.Text), socUrlBox.Text, HexConverter(colorBut.BackColor));
+			HomeData data = new HomeData(logo.Image, Webber.simpleHTMLEncode(descBox.Text), socUrlBox.Text, HexConverter(colorBut.BackColor));
 
             new Task(() =>
             {
                 try
                 {
-                    Webber.SetHome(data);
+					Webber.SetHome(data);
 
                     this.Invoke((MethodInvoker)delegate
                     {
@@ -496,13 +496,13 @@ namespace Ålleinfo_Admin
             else
                 data = new NewsData();
 
-            data.changeData(Webber.simpleHTMLEncode(headline.Text), Webber.simpleHTMLEncode(shortDesc.Text), Webber.simpleHTMLEncode(Type.Text), buttonUrl.Text, Webber.simpleHTMLEncode(CreateDescription.Text));
+			data.changeData(Webber.simpleHTMLEncode(headline.Text), Webber.simpleHTMLEncode(shortDesc.Text), Webber.simpleHTMLEncode(Type.Text), buttonUrl.Text, Webber.simpleHTMLEncode(CreateDescription.Text));
 
             new Task(() =>
             {
                 try
                 {
-                    Webber.SetNews(data);
+					Webber.SetNews(data);
 
                     this.Invoke((MethodInvoker)delegate
                     {

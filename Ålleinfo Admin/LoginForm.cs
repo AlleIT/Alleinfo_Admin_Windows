@@ -65,7 +65,7 @@ namespace Ålleinfo_Admin
 
             new Task(() =>
                 {
-                    Webresponse WR = Webber.Login(UsernameBox.Text, PasswordBox.Text);
+				Webresponse WR = Webber.Login(UsernameBox.Text, PasswordBox.Text);
 
                     this.Invoke((MethodInvoker)delegate
                     {
