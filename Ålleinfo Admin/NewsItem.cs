@@ -35,7 +35,7 @@ namespace Ålleinfo_Admin
             #region Label headline
             Label headline = new Label();
             headline.AutoSize = true;
-            headline.Font = new Font("Calibri", 20f, FontStyle.Regular);
+            headline.Font = new Font("Calibri", 18f, FontStyle.Regular);
             headline.Text = data.headline;
             headline.Top = container.Height / 4 - headline.Height / 2;
             headline.Left = 10;

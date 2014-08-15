@@ -45,6 +45,7 @@
             this.panel_home = new System.Windows.Forms.Panel();
             this.hexcolor = new System.Windows.Forms.TextBox();
             this.colorBut = new System.Windows.Forms.Panel();
+            this.label16 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
             this.label8 = new System.Windows.Forms.Label();
@@ -77,7 +78,6 @@
             this.label14 = new System.Windows.Forms.Label();
             this.noNewsLabel = new System.Windows.Forms.Label();
             this.newsPresenter = new System.Windows.Forms.FlowLayoutPanel();
-            this.label16 = new System.Windows.Forms.Label();
             this.AvailibleActions.SuspendLayout();
             this.action_Hem.SuspendLayout();
             this.action_Create.SuspendLayout();
@@ -319,7 +319,7 @@
             this.panel_home.Controls.Add(this.logo);
             this.panel_home.Location = new System.Drawing.Point(242, 40);
             this.panel_home.Name = "panel_home";
-            this.panel_home.Size = new System.Drawing.Size(558, 510);
+            this.panel_home.Size = new System.Drawing.Size(558, 0);
             this.panel_home.TabIndex = 11;
             // 
             // hexcolor
@@ -346,6 +346,19 @@
             this.colorBut.TabIndex = 12;
             this.colorBut.TabStop = true;
             this.colorBut.Click += new System.EventHandler(this.colorBut_Click);
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.BackColor = System.Drawing.Color.Transparent;
+            this.label16.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label16.ForeColor = System.Drawing.Color.White;
+            this.label16.Location = new System.Drawing.Point(11, 8);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(274, 33);
+            this.label16.TabIndex = 0;
+            this.label16.Text = "Se till att texten är läslig";
+            this.label16.Click += new System.EventHandler(this.colorBut_Click);
             // 
             // panel1
             // 
@@ -378,6 +391,7 @@
             // 
             this.socUrlBox.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.socUrlBox.Location = new System.Drawing.Point(232, 29);
+            this.socUrlBox.MaxLength = 1000;
             this.socUrlBox.Name = "socUrlBox";
             this.socUrlBox.Size = new System.Drawing.Size(314, 31);
             this.socUrlBox.TabIndex = 0;
@@ -403,9 +417,9 @@
             this.execHome.Cursor = System.Windows.Forms.Cursors.Hand;
             this.execHome.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.execHome.ForeColor = System.Drawing.Color.White;
-            this.execHome.Location = new System.Drawing.Point(423, 445);
+            this.execHome.Location = new System.Drawing.Point(423, -65);
             this.execHome.Name = "execHome";
-            this.execHome.Padding = new System.Windows.Forms.Padding(10, 10, 10, 10);
+            this.execHome.Padding = new System.Windows.Forms.Padding(10);
             this.execHome.Size = new System.Drawing.Size(128, 53);
             this.execHome.TabIndex = 8;
             this.execHome.Text = "Verkställ";
@@ -533,7 +547,7 @@
             // 
             this.headline.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.headline.Location = new System.Drawing.Point(40, 35);
-            this.headline.MaxLength = 200;
+            this.headline.MaxLength = 36;
             this.headline.Name = "headline";
             this.headline.Size = new System.Drawing.Size(240, 31);
             this.headline.TabIndex = 0;
@@ -607,7 +621,7 @@
             this.saveExec.ForeColor = System.Drawing.Color.White;
             this.saveExec.Location = new System.Drawing.Point(451, -62);
             this.saveExec.Name = "saveExec";
-            this.saveExec.Padding = new System.Windows.Forms.Padding(10, 10, 10, 10);
+            this.saveExec.Padding = new System.Windows.Forms.Padding(10);
             this.saveExec.Size = new System.Drawing.Size(95, 53);
             this.saveExec.TabIndex = 19;
             this.saveExec.Text = "Spara";
@@ -697,23 +711,10 @@
             this.newsPresenter.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.newsPresenter.Location = new System.Drawing.Point(0, 50);
             this.newsPresenter.Name = "newsPresenter";
-            this.newsPresenter.Padding = new System.Windows.Forms.Padding(10, 10, 10, 10);
+            this.newsPresenter.Padding = new System.Windows.Forms.Padding(10);
             this.newsPresenter.Size = new System.Drawing.Size(558, 440);
             this.newsPresenter.TabIndex = 0;
             this.newsPresenter.WrapContents = false;
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.BackColor = System.Drawing.Color.Transparent;
-            this.label16.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label16.ForeColor = System.Drawing.Color.White;
-            this.label16.Location = new System.Drawing.Point(11, 8);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(274, 33);
-            this.label16.TabIndex = 0;
-            this.label16.Text = "Se till att texten är läslig";
-            this.label16.Click += new System.EventHandler(this.colorBut_Click);
             // 
             // AdminForm
             // 

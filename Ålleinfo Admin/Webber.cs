@@ -335,7 +335,6 @@ namespace Ålleinfo_Admin
             }
 
         }
-        
         #endregion
 
         public static void performDefaultWebRequest(NameValueCollection reqParams, out Webresponse response)
