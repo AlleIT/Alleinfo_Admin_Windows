@@ -17,7 +17,7 @@ namespace Ålleinfo_Admin
         #region Default Server
 
         const String Error_NoResponse = "Servern svarade inte";
-        const String URI = "http://83.223.17.30/AlleIT/Alleinfo/winadmin/RequestHandler.php"; //OBS! ändra till https:// när port 443 är öppnad!
+        const String URI = "http://allebergsgymnasiet.se/elevkaren/Alleinfo/winadmin/RequestHandler.php"; //OBS! ändra till https:// när port 443 är öppnad!
 
         #endregion
 
