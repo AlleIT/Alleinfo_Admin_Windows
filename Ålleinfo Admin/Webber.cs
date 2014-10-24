@@ -17,7 +17,9 @@ namespace Ålleinfo_Admin
         #region Default Server
 
         const String Error_NoResponse = "Servern svarade inte";
-        const String URI = "http://allebergsgymnasiet.se/elevkaren/winadmin/RequestHandler.php"; //OBS! ändra till https:// när port 443 är öppnad!
+        const String base_URI = "http://allebergsgymnasiet.se/elevkaren";
+        const String Request_URI = base_URI + "/winadmin/RequestHandler.php";
+        const String Image_URI = base_URI + "/utskottsbilder/";
 
         #endregion
 
@@ -110,7 +112,7 @@ namespace Ålleinfo_Admin
                 try
                 {
                     dynamic jsonData = JsonConvert.DeserializeObject(response.Message);
-                    HttpWebRequest httpWebRequest = (HttpWebRequest)HttpWebRequest.Create((String)jsonData.logoPath);
+                    HttpWebRequest httpWebRequest = (HttpWebRequest)HttpWebRequest.Create(Image_URI + (String)jsonData.logoPath);
                     HttpWebResponse httpWebReponse = (HttpWebResponse)httpWebRequest.GetResponse();
                     Stream stream = httpWebReponse.GetResponseStream();
 
@@ -345,7 +347,7 @@ namespace Ålleinfo_Admin
             {
                 try
                 {
-                    response.Message = Encoding.UTF8.GetString(WC.UploadValues(URI, reqParams));
+                    response.Message = Encoding.UTF8.GetString(WC.UploadValues(Request_URI, reqParams));
 
                     if (String.IsNullOrWhiteSpace(response.Message))
                     {

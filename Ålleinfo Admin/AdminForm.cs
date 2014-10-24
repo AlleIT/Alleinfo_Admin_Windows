@@ -265,6 +265,10 @@ namespace Ålleinfo_Admin
                         descBox.Text = Webber.simpleHTMLDecode(data.description);
                         colorBut.BackColor = ColorTranslator.FromHtml(data.hexaColor);
                         hexcolor.Text = data.hexaColor.ToUpper();
+
+                        if (String.IsNullOrWhiteSpace(hexcolor.Text))
+                            hexcolor.Text = "#000000";
+
                         loading.Height = 0;
                     });
 
