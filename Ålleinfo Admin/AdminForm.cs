@@ -265,6 +265,8 @@ namespace Ålleinfo_Admin
                         descBox.Text = Webber.simpleHTMLDecode(data.description);
                         colorBut.BackColor = ColorTranslator.FromHtml(data.hexaColor);
                         hexcolor.Text = data.hexaColor.ToUpper();
+                        logo_color.BackColor = ColorTranslator.FromHtml(hexcolor.Text);
+                        logo.BackColor = ColorTranslator.FromHtml(hexcolor.Text);
 
                         if (String.IsNullOrWhiteSpace(hexcolor.Text))
                             hexcolor.Text = "#000000";
@@ -470,6 +472,8 @@ namespace Ålleinfo_Admin
             {
                 colorBut.BackColor = colorPicker.Color;
                 hexcolor.Text = HexConverter(colorPicker.Color).ToUpper();
+                logo_color.BackColor = ColorTranslator.FromHtml(hexcolor.Text);
+                logo.BackColor = ColorTranslator.FromHtml(hexcolor.Text);
             }
         }
 
@@ -525,7 +529,11 @@ namespace Ålleinfo_Admin
                 hexcolor.Text = hexcolor.Text.Substring(0, 7);
 
             if (hexcolor.Text.Length == 7)
+            {
                 colorBut.BackColor = ColorTranslator.FromHtml(hexcolor.Text);
+                logo_color.BackColor = ColorTranslator.FromHtml(hexcolor.Text);
+                logo.BackColor = ColorTranslator.FromHtml(hexcolor.Text);
+            }
         }
 
         #endregion

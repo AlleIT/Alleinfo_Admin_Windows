@@ -78,6 +78,7 @@
             this.label14 = new System.Windows.Forms.Label();
             this.noNewsLabel = new System.Windows.Forms.Label();
             this.newsPresenter = new System.Windows.Forms.FlowLayoutPanel();
+            this.logo_color = new System.Windows.Forms.Panel();
             this.AvailibleActions.SuspendLayout();
             this.action_Hem.SuspendLayout();
             this.action_Create.SuspendLayout();
@@ -317,9 +318,10 @@
             this.panel_home.Controls.Add(this.label5);
             this.panel_home.Controls.Add(this.label4);
             this.panel_home.Controls.Add(this.logo);
+            this.panel_home.Controls.Add(this.logo_color);
             this.panel_home.Location = new System.Drawing.Point(242, 40);
             this.panel_home.Name = "panel_home";
-            this.panel_home.Size = new System.Drawing.Size(558, 0);
+            this.panel_home.Size = new System.Drawing.Size(558, 510);
             this.panel_home.TabIndex = 11;
             // 
             // hexcolor
@@ -417,7 +419,7 @@
             this.execHome.Cursor = System.Windows.Forms.Cursors.Hand;
             this.execHome.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.execHome.ForeColor = System.Drawing.Color.White;
-            this.execHome.Location = new System.Drawing.Point(423, -65);
+            this.execHome.Location = new System.Drawing.Point(423, 445);
             this.execHome.Name = "execHome";
             this.execHome.Padding = new System.Windows.Forms.Padding(10);
             this.execHome.Size = new System.Drawing.Size(128, 53);
@@ -464,9 +466,9 @@
             this.logo.BackColor = System.Drawing.Color.Transparent;
             this.logo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.logo.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.logo.Location = new System.Drawing.Point(6, 6);
+            this.logo.Location = new System.Drawing.Point(21, 21);
             this.logo.Name = "logo";
-            this.logo.Size = new System.Drawing.Size(215, 215);
+            this.logo.Size = new System.Drawing.Size(185, 185);
             this.logo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.logo.TabIndex = 0;
             this.logo.TabStop = false;
@@ -716,6 +718,13 @@
             this.newsPresenter.TabIndex = 0;
             this.newsPresenter.WrapContents = false;
             // 
+            // logo_color
+            // 
+            this.logo_color.Location = new System.Drawing.Point(6, 6);
+            this.logo_color.Name = "logo_color";
+            this.logo_color.Size = new System.Drawing.Size(215, 215);
+            this.logo_color.TabIndex = 16;
+            // 
             // AdminForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -815,5 +824,6 @@
         private System.Windows.Forms.TextBox hexcolor;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Panel logo_color;
     }
 }
