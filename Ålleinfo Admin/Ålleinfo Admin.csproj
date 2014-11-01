@@ -25,7 +25,7 @@
     <MapFileExtensions>false</MapFileExtensions>
     <InstallUrl>http://allebergsgymnasiet.se/elevkaren/winadmin/Windows/</InstallUrl>
     <UpdateUrl>http://allebergsgymnasiet.se/elevkaren/winadmin/Windows/</UpdateUrl>
-    <ProductName>Ållainfo Admin</ProductName>
+    <ProductName>Ålleinfo Admin</ProductName>
     <PublisherName>ÅlleIT</PublisherName>
     <WebPage>publish.htm</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
