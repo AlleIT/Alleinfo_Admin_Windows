@@ -30,7 +30,7 @@ namespace Ålleinfo_Admin
         }
 
         public AdminForm()
-        {            
+        {
             InitializeComponent();
             usermessage.Text = "Välkomna, " + HttpUtility.HtmlDecode(Webber.Name);
             ActionButton_Click(action_Hem, null);
@@ -470,6 +470,11 @@ namespace Ålleinfo_Admin
 
             if (colorPicker.ShowDialog() == DialogResult.OK)
             {
+                if (colorPicker.Color.GetSaturation() < .35f || colorPicker.Color.GetBrightness() < .3f)
+                {
+                    MessageBox.Show("Denna färg är inte tillräckligt distinkt för att användas i Ålleinfo." + Environment.NewLine + "Välj en mer distinkt färg (Blåare, rödare etc.) för att byta.", "Färgen är inte tillräckligt distinkt", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
                 colorBut.BackColor = colorPicker.Color;
                 hexcolor.Text = HexConverter(colorPicker.Color).ToUpper();
                 logo_color.BackColor = ColorTranslator.FromHtml(hexcolor.Text);
@@ -510,19 +515,18 @@ namespace Ålleinfo_Admin
                 hexcolor.Text = "#";
                 hexcolor.Select(1, 0);
             }
-            
+
             while (hexcolor.Text.Substring(1).Contains("#"))
             {
-                if (hexcolor.SelectionStart > hexcolor.Text.IndexOf("#", 1))
-                    hexcolor.Select(hexcolor.SelectionStart - 1, 0);
-
                 hexcolor.Text = hexcolor.Text.Substring(0, hexcolor.Text.IndexOf("#", 1)) + hexcolor.Text.Substring(hexcolor.Text.IndexOf("#", 1) + 1);
             }
 
             if (hexcolor.Text.Substring(0, 1) != "#")
             {
+                int selectionIndex = hexcolor.SelectionStart;
+                int selectionAmount = hexcolor.SelectionLength;
                 hexcolor.Text = "#" + hexcolor.Text;
-                hexcolor.Select(hexcolor.SelectionStart + 1, 0);
+                hexcolor.Select(selectionIndex + 1, selectionAmount);
             }
 
             if (hexcolor.Text.Length > 7)
@@ -530,9 +534,27 @@ namespace Ålleinfo_Admin
 
             if (hexcolor.Text.Length == 7)
             {
-                colorBut.BackColor = ColorTranslator.FromHtml(hexcolor.Text);
-                logo_color.BackColor = ColorTranslator.FromHtml(hexcolor.Text);
-                logo.BackColor = ColorTranslator.FromHtml(hexcolor.Text);
+                Color c = ColorTranslator.FromHtml(hexcolor.Text);
+                if (c.GetSaturation() < .35f || c.GetBrightness() < .3f)
+                {
+                    MessageBox.Show("Denna färg är inte tillräckligt distinkt för att användas i Ålleinfo." + Environment.NewLine + "Välj en mer distinkt färg (Blåare, rödare etc.) för att byta.", "Färgen är inte tillräckligt distinkt", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    if (hexcolor.SelectionStart == hexcolor.TextLength)
+                    {
+                        hexcolor.Text = hexcolor.Text.Substring(0, hexcolor.Text.Length - 1);
+                        hexcolor.Select(hexcolor.Text.Length, 0);
+                    }
+                    else
+                    {
+                        int selectionIndex = hexcolor.SelectionStart;
+                        int selectionAmount = hexcolor.SelectionLength;
+                        hexcolor.Text = hexcolor.Text.Substring(0, hexcolor.SelectionStart - 1) + hexcolor.Text.Substring(hexcolor.SelectionStart);
+                        hexcolor.Select(selectionIndex - 1, selectionAmount);
+                    }
+                    return;
+                }
+                colorBut.BackColor = c;
+                logo_color.BackColor = c;
+                logo.BackColor = c;
             }
         }
 
@@ -687,7 +709,7 @@ namespace Ålleinfo_Admin
         {
             return "#" + c.R.ToString("X2") + c.G.ToString("X2") + c.B.ToString("X2");
         }
-        
+
         #endregion
 
         #region Generic texbox behaviours
