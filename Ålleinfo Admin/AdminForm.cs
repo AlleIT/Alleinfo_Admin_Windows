@@ -425,6 +425,10 @@ namespace Ålleinfo_Admin
             if (execHome.Text == "Vänta...")
                 return;
 
+            Color c = ColorTranslator.FromHtml(hexcolor.Text);
+            if (c.GetSaturation() < .35f || c.GetBrightness() < .3f)
+                MessageBox.Show("Den valda Otillåten färg för att användas i Ålleinfo." + Environment.NewLine + "Välj en mer distinkt färg (Blåare, rödare, ljusare etc.) för att byta.", "Otillåten färg", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
             execHome.Text = "Vänta...";
 
             HomeData data = new HomeData(logo.Image, Webber.simpleHTMLEncode(descBox.Text), socUrlBox.Text, HexConverter(colorBut.BackColor));
@@ -472,7 +476,7 @@ namespace Ålleinfo_Admin
             {
                 if (colorPicker.Color.GetSaturation() < .35f || colorPicker.Color.GetBrightness() < .3f)
                 {
-                    MessageBox.Show("Denna färg är inte tillräckligt distinkt för att användas i Ålleinfo." + Environment.NewLine + "Välj en mer distinkt färg (Blåare, rödare etc.) för att byta.", "Färgen är inte tillräckligt distinkt", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Denna färg är inte tillräckligt distinkt för att användas i Ålleinfo." + Environment.NewLine + "Välj en mer distinkt färg (Blåare, rödare etc.) för att byta.", "Otillåten färg", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
                 colorBut.BackColor = colorPicker.Color;
@@ -537,7 +541,7 @@ namespace Ålleinfo_Admin
                 Color c = ColorTranslator.FromHtml(hexcolor.Text);
                 if (c.GetSaturation() < .35f || c.GetBrightness() < .3f)
                 {
-                    MessageBox.Show("Denna färg är inte tillräckligt distinkt för att användas i Ålleinfo." + Environment.NewLine + "Välj en mer distinkt färg (Blåare, rödare etc.) för att byta.", "Färgen är inte tillräckligt distinkt", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Denna färg är inte tillräckligt distinkt för att användas i Ålleinfo." + Environment.NewLine + "Välj en mer distinkt färg (Blåare, rödare etc.) för att byta.", "Otillåten färg", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     if (hexcolor.SelectionStart == hexcolor.TextLength)
                     {
                         hexcolor.Text = hexcolor.Text.Substring(0, hexcolor.Text.Length - 1);
